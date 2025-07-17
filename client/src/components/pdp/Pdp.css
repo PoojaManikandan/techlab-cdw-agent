@@ -1,0 +1,218 @@
+/* PDP.css */
+
+.pdp-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #150404;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.section-description {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column; /* Stack on small screens */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+@media (min-width: 768px) { /* For larger screens, arrange horizontally */
+    .product-card {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+.product-image-section {
+    flex-shrink: 0;
+    margin-right: 20px;
+    margin-bottom: 20px; /* Space below image on mobile */
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .product-image-section {
+        margin-bottom: 0;
+    }
+}
+
+.product-image {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
+.product-details-section {
+    flex-grow: 1;
+    margin-right: 20px;
+    margin-bottom: 20px; /* Space below details on mobile */
+}
+
+@media (min-width: 768px) {
+    .product-details-section {
+        margin-bottom: 0;
+    }
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.product-codes {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.product-specs {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.spec-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.spec-label {
+    font-weight: bold;
+    width: 150px; /* Fixed width for labels */
+    flex-shrink: 0;
+}
+
+.spec-value {
+    flex-grow: 1;
+}
+
+.expand-specs {
+    font-size: 14px;
+    color: #007bff; /* Blue for link */
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.product-action-section {
+    flex-shrink: 0;
+    width: 100%; /* Full width on mobile */
+}
+
+@media (min-width: 768px) {
+    .product-action-section {
+        width: 250px; /* Fixed width for action section on desktop */
+    }
+}
+
+.availability {
+    font-size: 14px;
+    color: #e67e22; /* Orange-ish color for availability */
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.availability-text {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+
+.advertised-price {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.quantity-add-section {
+    display: flex;
+    flex-direction: column; /* Stack on mobile */
+    gap: 10px;
+}
+
+.quantity-selector {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    overflow: hidden;
+    width: 100px; /* Fixed width for quantity selector */
+}
+
+.quantity-selector button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+}
+
+.quantity-selector button:hover {
+    background-color: #e0e0e0;
+}
+
+.quantity-selector input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    -moz-appearance: textfield; /* Hide arrows for Firefox */
+}
+
+.quantity-selector input::-webkit-outer-spin-button,
+.quantity-selector input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.add-to-cart-button {
+    background-color: #150404; /* Dark background for button */
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%; /* Full width on mobile */
+}
+
+.add-to-cart-button:hover {
+    background-color: #555;
+}
+
+.price-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}

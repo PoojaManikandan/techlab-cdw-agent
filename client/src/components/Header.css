@@ -1,37 +1,223 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e9ecef;
+/* Header.css - Updated */
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.header__logo img {
-  height: 40px;
+
+/* Main Header Section */
+.header-main {
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Equivalent to shadow-sm */
+    padding: 1rem; /* py-4 px-4 */
 }
 
-.header__nav {
-  display: flex;
+/* Container for responsiveness */
+.header-container {
+    display: flex;
+    flex-direction: column; /* Stack columns on small screens */
+    align-items: flex-start; /* Align items to the start on small screens */
+    padding: 0 40px;
 }
 
-.header__nav-list {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+@media (min-width: 1024px) { /* Equivalent to lg: */
+    .header-container {
+        flex-direction: row; /* Row on large screens */
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
-.header__nav-item {
-  margin-left: 1.5rem;
+/* CDW Logo */
+.cdw-logo {
+    flex-shrink: 0;
+    margin-bottom: 1rem; /* Add some space below logo on mobile */
 }
 
-.header__nav-link {
-  text-decoration: none;
-  color: #343a40;
-  font-weight: 500;
+@media (min-width: 1024px) {
+    .cdw-logo {
+        margin-bottom: 0; /* No margin on desktop */
+    }
 }
 
-.header__nav-link:hover {
-  color: #007bff;
+.cdw-logo img {
+    height: 40px; /* h-10 */
+    width: auto;
+    border-radius: 0.25rem; /* rounded-md */
+}
+
+/* Icons and User Actions */
+.header-icons {
+    display: flex;
+    flex-direction: column; /* Stack icons vertically on small screens */
+    gap: 0.5rem; /* space-y-2 for stacked items */
+    width: 100%; /* Take full width on mobile */
+    margin-bottom: 1rem; /* Space below icons on mobile */
+}
+
+@media (min-width: 1024px) {
+    .header-icons {
+        flex-direction: row; /* Row on large screens */
+        gap: 1.5rem; /* space-x-6 */
+        width: auto; /* Auto width on desktop */
+        margin-bottom: 0; /* No margin on desktop */
+    }
+}
+
+.icon-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem; /* space-x-1 */
+    color: #4b5563; /* text-gray-600 */
+    cursor: pointer;
+    transition-property: color;
+    transition-duration: 200ms;
+    padding: 0.25rem 0; /* Add padding for clickable area on mobile */
+}
+
+.icon-item span {
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    display: block; /* Always show text for better mobile usability as per screenshot */
+}
+
+
+/* Navigation Bar */
+.header-nav {
+    background-color: #e5e7eb; /* gray-200 */
+    padding: 0.75rem 1rem; /* py-3 px-4 */
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); /* shadow-inner */
+}
+
+.header-nav-container {
+    display: flex;
+    flex-direction: column; /* Stack on small screens */
+    align-items: flex-start; /* Align to start on mobile */
+    padding: 0 40px;
+}
+
+@media (min-width: 1024px) {
+    .header-nav-container {
+        flex-direction: row; /* Row on large screens */
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column; /* Stack links vertically on small screens */
+    gap: 0.5rem; /* space-y-2 */
+    color: #374151; /* text-gray-700 */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    width: 100%; /* Take full width on mobile */
+    margin-bottom: 1rem; /* Space below links on mobile */
+}
+
+@media (min-width: 1024px) {
+    .nav-links {
+        flex-direction: row; /* Row on large screens */
+        gap: 1.5rem; /* space-x-6 */
+        width: auto; /* Auto width on desktop */
+        margin-bottom: 0; /* No margin on desktop */
+    }
+}
+
+.nav-links a {
+    padding: 0.25rem 0; /* py-1 */
+    text-decoration: none;
+    color: #150404;
+    font-weight: 700;
+}
+
+/* Mode Toggle Switch */
+.mode-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 0.75rem; /* mt-3 */
+    width: 100%; /* Full width on mobile */
+    justify-content: flex-start; /* Align to start on mobile */
+}
+
+@media (min-width: 1024px) { /* sm:mt-0 */
+    .mode-toggle-wrapper {
+        margin-top: 0;
+        width: auto; /* Auto width on desktop */
+        justify-content: flex-end; /* Align to end on desktop */
+    }
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.toggle-container {
+    position: relative;
+    width: 3.5rem; /* w-14 */
+    height: 2rem; /* h-8 */
+}
+
+.toggle-background {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px; /* rounded-full */
+    transition-property: background-color;
+    transition-duration: 150ms;
+}
+
+.toggle-background.normal-mode-bg {
+    background-color: #4a5568; /* gray-700 */
+}
+
+.toggle-background.dark-mode-bg {
+    background-color: #9ca3af; /* gray-400 */
+}
+
+.toggle-dot {
+    position: absolute;
+    left: 0.25rem; /* left-1 */
+    top: 0.25rem; /* top-1 */
+    background-color: #fff;
+    width: 1.5rem; /* w-6 */
+    height: 1.5rem; /* h-6 */
+    border-radius: 9999px; /* rounded-full */
+    transition-property: transform;
+    transition-duration: 150ms;
+}
+
+.toggle-input:checked + .toggle-background + .toggle-dot {
+    transform: translateX(1.5rem); /* translate-x-6 */
+}
+
+.toggle-text {
+    margin-left: 0.75rem; /* ml-3 */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 600; /* font-semibold */
+}
+
+.toggle-text.normal-mode-text {
+    color: #1f2937; /* gray-900 */
+}
+
+.toggle-text.dark-mode-text {
+    color: #4b5563; /* gray-600 */
 }
