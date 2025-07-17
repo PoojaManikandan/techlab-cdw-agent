@@ -1,36 +1,81 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './Header.css'; // Import styles for the header
+import React, { useState } from 'react';
+import { Bell, User, ShoppingCart } from 'lucide-react';
+import './Header.css'; // Import the CSS file
+import logo from '../images/logo.png'; // Adjust the path as necessary
 
-const Header = ({ logo, links }) => {
+function Header() {
+  const [isNormalMode, setIsNormalMode] = useState(true);
+
+  const toggleMode = () => {
+    setIsNormalMode(!isNormalMode);
+  };
+
   return (
-    <header className="header">
-      <div className="header__logo">
-        <img src={logo} alt="Logo" />
+    <header className="w-full">
+      {/* Main Header Section */}
+      <div className="header-main">
+        <div className="header-container">
+          {/* CDW Logo */}
+          <div className="cdw-logo">
+            <img
+              src={logo} // Placeholder image
+              alt="CDW Logo"
+            />
+          </div>
+
+          {/* Icons and User Actions */}
+          <div className="header-icons">
+            <div className="icon-item">
+              <Bell className="w-5 h-5" />
+              <span>Notifications</span>
+            </div>
+            <div className="icon-item">
+              <User className="w-5 h-5" />
+              <span>Sign In</span>
+            </div>
+            <div className="icon-item">
+              <ShoppingCart className="w-5 h-5" />
+              <span>Cart</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <nav className="header__nav">
-        <ul className="header__nav-list">
-          {links.map((link, index) => (
-            <li key={index} className="header__nav-item">
-              <a href={link.href} className="header__nav-link">
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+
+      {/* Navigation Bar */}
+      <nav className="header-nav">
+        <div className="header-nav-container">
+          <div className="nav-links">
+            <a href="#">Hardware</a>
+            <a href="#">Software</a>
+            <a href="#">Services</a>
+            <a href="#">IT Solutions</a>
+            <a href="#">Brands</a>
+            <a href="#">Research Hub</a>
+          </div>
+
+          {/* Mode Toggle Switch */}
+          <div className="mode-toggle-wrapper">
+            <label htmlFor="mode-toggle" className="toggle-label">
+              <div className="toggle-container"> {/* Added a container for positioning */}
+                <input
+                  type="checkbox"
+                  id="mode-toggle"
+                  className="toggle-input"
+                  checked={isNormalMode}
+                  onChange={toggleMode}
+                />
+                <div className={`toggle-background ${isNormalMode ? 'normal-mode-bg' : 'dark-mode-bg'}`}></div>
+                <div className="toggle-dot"></div>
+              </div>
+              <div className={`toggle-text ${isNormalMode ? 'normal-mode-text' : 'dark-mode-text'}`}>
+                {isNormalMode ? 'NORMAL MODE' : 'DARK MODE'}
+              </div>
+            </label>
+          </div>
+        </div>
       </nav>
     </header>
   );
-};
-
-Header.propTypes = {
-  logo: PropTypes.string.isRequired,
-  links: PropTypes.arrayOf(
-    PropTypes.shape({
-      href: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
+}
 
 export default Header;
