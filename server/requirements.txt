@@ -1,0 +1,5 @@
+fastapi
+pymongo[srv]==3.12
+python-dotenv
+uvicorn
+pydantic
