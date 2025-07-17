@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Bell, User, ShoppingCart } from 'lucide-react';
 import './Header.css'; // Import the CSS file
 import logo from '../images/logo.png'; // Adjust the path as necessary
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const [isNormalMode, setIsNormalMode] = useState(true);
+  const navigate = useNavigate();
 
   const toggleMode = () => {
     setIsNormalMode(!isNormalMode);
@@ -20,6 +22,10 @@ function Header() {
             <img
               src={logo} // Placeholder image
               alt="CDW Logo"
+              onClick={() => {
+                
+                navigate('/'); // Navigate to home on logo click
+              }}
             />
           </div>
 
@@ -33,7 +39,7 @@ function Header() {
               <User className="w-5 h-5" />
               <span>Sign In</span>
             </div>
-            <div className="icon-item">
+            <div className="icon-item" onClick={() => navigate('/cart')}>
               <ShoppingCart className="w-5 h-5" />
               <span>Cart</span>
             </div>

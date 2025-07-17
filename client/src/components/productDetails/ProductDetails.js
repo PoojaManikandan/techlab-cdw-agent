@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function ProductDetails({ name, mfg, cdw, specs }) {
+    const navigate = useNavigate();
     return (
         <div className="product-details-section">
-            <h2 className="product-name">{name}</h2>
+            <h2 className="product-name" onClick={() => navigate(`/details/${mfg}`)}>{name}</h2>
             <p className="product-codes">MFG#: {mfg} | CDW#: {cdw}</p>
             <div className="product-specs">
                 {specs.map((spec, index) => (

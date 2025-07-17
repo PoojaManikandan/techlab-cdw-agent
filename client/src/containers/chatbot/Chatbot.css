@@ -25,6 +25,11 @@
     position: relative; /* For the "Need Help?" text */
 }
 
+.chat-icon {
+    width: 100%;
+    margin-top: 7px;
+}
+
 .chat-bubble:hover {
     transform: scale(1.05);
 }

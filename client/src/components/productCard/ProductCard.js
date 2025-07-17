@@ -2,17 +2,20 @@ import React from 'react';
 import ProductDetails from '../productDetails/ProductDetails';
 import ProductActions from '../productActions/ProductAction';
 import ProductImage from '../productImage/ProductImage';
+import { useNavigate } from 'react-router-dom';
 
 function ProductCard({ product }) {
+    const navigate = useNavigate();
     const handleAddToCart = (quantity) => {
         // This function is now passed down to ProductActions
         console.log(`Added ${quantity} of product ${product.name} to cart.`);
-        alert(`Added ${quantity} of "${product.name}" to cart!`);
+        navigate('/cart'); // Navigate to the cart page after adding
+        
     };
 
     return (
         <div className="product-card">
-            <ProductImage imageUrl={product.imageUrl} altText={product.name} />
+            <ProductImage imageUrl={product.imageUrl} altText={product.name} wrapperClass={'product-image-section'} className={'product-image'} />
             <ProductDetails
                 name={product.name}
                 mfg={product.mfg}

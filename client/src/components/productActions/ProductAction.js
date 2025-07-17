@@ -43,7 +43,7 @@ function ProductActions({ availability, availabilityText, price, onAddToCart }) 
             </div>
             <p className="advertised-price">Advertised Price</p>
                 {/* Using the new Button component here */}
-                <Button onClick={() => onAddToCart(quantity)}>
+                <Button onClick={() => onAddToCart(quantity)} className={'add-to-cart-button'}>
                     Add To Cart
                 </Button>
         </div>

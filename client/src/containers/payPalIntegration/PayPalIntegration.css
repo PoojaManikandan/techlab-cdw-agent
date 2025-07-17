@@ -1,0 +1,46 @@
+/* PayPalIntegration.css */
+
+.paypal-integration-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-top: 20px; /* Space from above components */
+}
+
+.paypal-integration-container h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #150404;
+    margin-bottom: 15px;
+}
+
+.paypal-buttons-wrapper {
+    /* PayPal SDK will inject buttons here. You can add minimum height/width if needed */
+    min-height: 40px; /* Give some space */
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    align-items: center;
+}
+
+.paypal-note {
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+
+.paypal-loading-message,
+.paypal-error-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.paypal-error-message {
+    color: #dc3545; /* Red for errors */
+    font-weight: bold;
+}

@@ -35,6 +35,7 @@ body {
 .cdw-logo {
     flex-shrink: 0;
     margin-bottom: 1rem; /* Add some space below logo on mobile */
+    cursor: pointer;
 }
 
 @media (min-width: 1024px) {

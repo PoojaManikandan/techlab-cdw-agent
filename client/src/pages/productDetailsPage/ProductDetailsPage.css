@@ -1,0 +1,241 @@
+/* StarTechHDMICablePDP.css */
+
+.shdmi-pdp-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #150404;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.shdmi-product-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.shdmi-product-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000;
+    line-height: 1.3;
+}
+
+.shdmi-product-codes {
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.shdmi-product-main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+    .shdmi-product-main-content {
+        flex-direction: row;
+        gap: 30px;
+    }
+}
+
+.shdmi-image-section {
+    flex-shrink: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.shdmi-product-image {
+    width: 600px; /* Larger image as per screenshot */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 500px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.shdmi-details-section {
+    flex-grow: 1;
+    width: 100%; /* Take full width on small screens */
+}
+
+@media (min-width: 768px) {
+    .shdmi-details-section {
+        width: auto; /* Allow content to dictate width on larger screens */
+    }
+}
+
+
+.shdmi-original-price {
+    font-size: 16px;
+    color: #999;
+    text-decoration: line-through;
+    margin-bottom: 5px;
+}
+
+.shdmi-current-price {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.shdmi-price-label {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.shdmi-reviews-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #555;
+}
+
+.shdmi-reviews-text {
+    margin-right: 5px;
+}
+
+.shdmi-star-rating {
+    color: #ffc107; /* Gold color for stars */
+    font-size: 18px;
+    margin-right: 5px;
+    letter-spacing: -1px;
+}
+
+.shdmi-star.shdmi-half::before {
+    content: "\2605"; /* Full star character */
+    overflow: hidden;
+    width: 50%; /* Show half of the star */
+    display: inline-block;
+    direction: ltr;
+}
+.shdmi-star.shdmi-half {
+    position: relative;
+    display: inline-block;
+}
+.shdmi-star.shdmi-half::after {
+    content: "\2606"; /* Empty star character for the other half */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%; /* Cover the whole area */
+    color: #ddd; /* Color for empty part of half star */
+    z-index: -1;
+}
+
+.shdmi-star.shdmi-empty {
+    color: #ccc;
+}
+
+.shdmi-reviews-count {
+    font-size: 14px;
+    color: #777;
+}
+
+.shdmi-quantity-availability-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+    .shdmi-quantity-availability-group {
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+    }
+}
+
+.shdmi-quantity-selector {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    overflow: hidden;
+    width: 100px;
+}
+
+.shdmi-quantity-selector button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+}
+
+.shdmi-quantity-selector input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    -moz-appearance: textfield; /* Firefox */
+}
+
+.shdmi-quantity-selector input::-webkit-outer-spin-button,
+.shdmi-quantity-selector input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.shdmi-availability-info {
+    flex-grow: 1; /* Allows it to take available space */
+}
+
+.shdmi-availability {
+    font-size: 15px;
+    color: #28a745; /* Green for "In Stock" */
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.shdmi-availability-text {
+    font-size: 13px;
+    color: #777;
+}
+
+.shdmi-add-to-cart-button {
+    background-color: #150404;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin: 20px 0;
+    transition: background-color 0.2s ease;
+}
+
+.shdmi-add-to-cart-button:hover {
+    background-color: #555;
+}
+
+.shdmi-additional-actions {
+    margin-top: 10px;
+}
+
+.shdmi-action-checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.shdmi-action-checkbox input[type="checkbox"] {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+}

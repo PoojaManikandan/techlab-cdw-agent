@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import products from '../../data/product'; // Import mock product data
 import './Pdp.css'; // Import the CSS file
-import ProductCard from '../productCard/ProductCard';
+import ProductCard from '../../components/productCard/ProductCard';
 
 function PDP() {
     return (

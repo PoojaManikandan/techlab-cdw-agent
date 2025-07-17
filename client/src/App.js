@@ -1,23 +1,35 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import './App.css';
-import PDP from './components/pdp/Pdp';
+import PDP from './pages/pdp/Pdp';
 import Chatbot from './containers/chatbot/Chatbot';
+import ProductDetailsPage from './pages/productDetailsPage/ProductDetailsPage';
+import products from './data/product';
+import ShoppingCart from './pages/shoppingCart/ShoppingCart';
+import Checkout from './pages/checkout/Checkout';
+import OrderConfirmation from './pages/orderConfirmation/OrderConfirmation';
 
 const App = () => {
   const links = [
-    { href: '#home', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#contact', label: 'Contact' },
+    { href: '/', label: 'Home' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' },
   ];
 
   return (
-    <div>
+    <Router>
       <Header logo="/path/to/logo.png" links={links} />
-      {/* Other components */}
-      <PDP />
+      <Routes>
+        <Route path="/" element={<PDP />} />
+        <Route path="/details/:id" element={<ProductDetailsPage product={products[2]} />} />
+        <Route path="/cart" element={<ShoppingCart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/orderConfirmation" element={<OrderConfirmation />} />
+        {/* Add more routes as needed */}
+      </Routes>
       <Chatbot />
-    </div>
+    </Router>
   );
 };
 

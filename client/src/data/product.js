@@ -33,6 +33,28 @@ const products = [
             { label: 'Length', value: '8 ft' },
             // Note: The second product in the UX image only shows 4 specs, so I'll reflect that.
         ]
+    },
+    {
+        id: '3',
+        name: 'StarTech.com 6ft HDMI Cable - 4K High Speed HDMI Cable w/ Ethernet - HDMI 1.4 - HDMI Monitor Cable - HDMI to HDMI Cable',
+        mfg: 'HDMM6',
+        cdw: '3036583',
+        unspsc: '26121600',
+        imageUrl: 'http://googleusercontent.com/file_content/1',
+        originalPrice: '13.99',
+        price: '13.29',
+        priceLabel: 'My CDW Price',
+        reviews: {
+            stars: 4.5,
+            count: 14
+        },
+        availability: '1028 units In Stock',
+        availabilityText: 'Ships today if ordered within 5 hrs 4 mins',
+        additionalActions: [
+            { label: 'Add to Compare', type: 'checkbox' },
+            { label: 'Save to Favorites', type: 'checkbox' }
+        ],
+        specs: []
     }
 ];
 
