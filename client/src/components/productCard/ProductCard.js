@@ -17,6 +17,7 @@ function ProductCard({ product }) {
         <div className="product-card">
             <ProductImage imageUrl={product.imageUrl} altText={product.name} wrapperClass={'product-image-section'} className={'product-image'} />
             <ProductDetails
+                id={product.id}
                 name={product.name}
                 mfg={product.mfg}
                 cdw={product.cdw}

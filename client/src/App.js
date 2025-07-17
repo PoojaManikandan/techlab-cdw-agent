@@ -5,7 +5,6 @@ import './App.css';
 import PDP from './pages/pdp/Pdp';
 import Chatbot from './containers/chatbot/Chatbot';
 import ProductDetailsPage from './pages/productDetailsPage/ProductDetailsPage';
-import products from './data/product';
 import ShoppingCart from './pages/shoppingCart/ShoppingCart';
 import Checkout from './pages/checkout/Checkout';
 import OrderConfirmation from './pages/orderConfirmation/OrderConfirmation';
@@ -22,7 +21,7 @@ const App = () => {
       <Header logo="/path/to/logo.png" links={links} />
       <Routes>
         <Route path="/" element={<PDP />} />
-        <Route path="/details/:id" element={<ProductDetailsPage product={products[2]} />} />
+        <Route path="/details/:id" element={<ProductDetailsPage />} />
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orderConfirmation" element={<OrderConfirmation />} />

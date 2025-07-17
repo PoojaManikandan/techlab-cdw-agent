@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
-import './ProductDetailsPage.css'; // Dedicated CSS file for this component
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router';
+
+import './ProductDetailsPage.css';
 import Button from '../../components/button/Button';
 import ProductImage from '../../components/productImage/ProductImage';
 import { useNavigate } from 'react-router-dom';
 
-function ProductDetailsPage({ product }) { // Accept 'product' as a prop
+function ProductDetailsPage() { 
+    const params= useParams()
+    const [product, setProduct] = useState({});
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:8000/products/${params.id}`)
+            .then((response) => {
+                setProduct(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching product:', error);
+                setProduct({});
+            });
+    }, []);
+
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
 
