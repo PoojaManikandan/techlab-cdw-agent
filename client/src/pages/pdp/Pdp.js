@@ -1,9 +1,25 @@
-import React, { useState } from 'react';
-import products from '../../data/product'; // Import mock product data
-import './Pdp.css'; // Import the CSS file
+import React, { use, useState, useEffect } from 'react';
+import axios from 'axios';
+// import products from '../../data/product';
+import './Pdp.css';
 import ProductCard from '../../components/productCard/ProductCard';
 
+
 function PDP() {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:8000/products')
+            .then((response) => {
+                setProducts(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching products:', error);
+                setProducts([]);
+            });
+    }, []);
+
     return (
         <div className="pdp-container">
             <h1 className="section-title">Hardware</h1>

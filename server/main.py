@@ -1,7 +1,9 @@
 import os
 from dotenv import load_dotenv
 
+
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Response
 from fastapi.responses import JSONResponse
 
@@ -19,6 +21,16 @@ app = FastAPI(
     title="CDW ECommerce API",
     summary="API for managing CDW e-commerce operations"
 )
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 mongodb_url = os.environ["MONGODB_URL"]
 client = MongoClient(mongodb_url, server_api=ServerApi('1'))
 db = client.cdw_warehouse
