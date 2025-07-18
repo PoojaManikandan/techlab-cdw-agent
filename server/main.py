@@ -14,8 +14,12 @@ from pymongo.server_api import ServerApi
 
 from pydantic.functional_validators import BeforeValidator
 from typing_extensions import Annotated
+import requests
 
 load_dotenv()
+
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID')
+PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET')
 
 app = FastAPI(
     title="CDW ECommerce API",
@@ -99,3 +103,20 @@ def get_product(product_id: str):
     except Exception as e:
         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
     
+def get_paypal_access_token():
+    response = requests.post(
+        "https://api-m.sandbox.paypal.com/v1/oauth2/token",
+        auth=(PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET),
+        headers={"Accept": "application/json"},
+        data={"grant_type": "client_credentials"},
+    )
+    return response.json()["access_token"]
+
+@app.post("/api/paypal/capture-order/{order_id}")
+def capture_order(order_id: str):
+    access_token = get_paypal_access_token()
+    res = requests.post(
+        f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{order_id}/capture",
+        headers={"Authorization": f"Bearer {access_token}"}
+    )
+    return res.json()

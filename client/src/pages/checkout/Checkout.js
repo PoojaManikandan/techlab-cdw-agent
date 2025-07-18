@@ -53,12 +53,7 @@ function Checkout({ subtotal = 29.43, shipping = 74.93 }) {
                     {/* PayPal Integration Placeholder (below the Order Summary) */}
                     <div className="checkout-full-paypal-placeholder">
                         <h3>Payment Options</h3>
-                        <p>This is where PayPal integration would go.</p>
-                        <button className="checkout-full-paypal-button">Pay with PayPal</button>
-                        <p className="checkout-full-paypal-note">
-                            (Actual PayPal integration requires PayPal SDK setup)
-                            {/* <PayPalIntegration amount={orderTotal} currency="USD" /> */}
-                        </p>
+                        <PayPalIntegration amount={orderTotal} currency="USD" />
                     </div>
                 </div>
 
