@@ -186,7 +186,7 @@ body {
 }
 
 .toggle-background.normal-mode-bg {
-    background-color: #4a5568; /* gray-700 */
+    background-color: #dc2626; /* gray-700 */
 }
 
 .toggle-background.dark-mode-bg {
@@ -216,9 +216,9 @@ body {
 }
 
 .toggle-text.normal-mode-text {
-    color: #1f2937; /* gray-900 */
+    color: #dc2626; /* gray-600 */
 }
 
 .toggle-text.dark-mode-text {
-    color: #4b5563; /* gray-600 */
+    color: #1f2937; /* gray-900 */
 }

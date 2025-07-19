@@ -3,9 +3,10 @@ import { Bell, User, ShoppingCart } from 'lucide-react';
 import './Header.css'; // Import the CSS file
 import logo from '../images/logo.png'; // Adjust the path as necessary
 import { useNavigate } from 'react-router-dom';
+import chatbotlogo from '../images/chatbotlogo.png'; 
 
-function Header() {
-  const [isNormalMode, setIsNormalMode] = useState(true);
+function Header({isNormalMode, setIsNormalMode}) {
+  
   const navigate = useNavigate();
 
   const toggleMode = () => {
@@ -71,10 +72,12 @@ function Header() {
                   onChange={toggleMode}
                 />
                 <div className={`toggle-background ${isNormalMode ? 'normal-mode-bg' : 'dark-mode-bg'}`}></div>
-                <div className="toggle-dot"></div>
+                <div className="toggle-dot">
+                    {isNormalMode ?<span class="toggle-icon"><img src={chatbotlogo} alt='logo' /></span>: ''}
+                </div>
               </div>
               <div className={`toggle-text ${isNormalMode ? 'normal-mode-text' : 'dark-mode-text'}`}>
-                {isNormalMode ? 'NORMAL MODE' : 'DARK MODE'}
+                {isNormalMode ? 'AI MODE' : 'NORMAL MODE'}
               </div>
             </label>
           </div>

@@ -1,0 +1,139 @@
+.ai-chatbot-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Full viewport width */
+    height: 70vh; /* Full viewport height */
+    border-radius: 0; /* No rounded corners for full screen */
+    box-shadow: none; /* Remove shadow for full screen */
+    margin: 0; /* No margins */
+    background-color: #f0f8ff; /* Lighter background for the full page */
+    overflow: hidden; /* Keep content within bounds */
+}
+
+/* Header (Enhanced) */
+.ai-chatbot-header {
+    background-color: #dc2626; /* CDW Red */
+    color: white;
+    padding: 20px 30px; /* Slightly more padding */
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle header shadow */
+    z-index: 10; /* Ensure header is above other elements */
+}
+
+.ai-chatbot-logo {
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Slightly enhanced logo text */
+}
+
+.ai-chatbot-header-text {
+    flex-grow: 1;
+}
+
+.ai-chatbot-support-title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+}
+
+.ai-chatbot-support-subtitle {
+    margin: 0;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+.ai-chatbot-mode-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.ai-chatbot-ai-icon {
+    font-size: 24px;
+    animation: pulse 2s infinite alternate; /* Subtle pulse animation for AI icon */
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+/* Chat Area (Styled) */
+.ai-chatbot-chat-area {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background:#fff; /* Soft gradient background */
+}
+
+.ai-chatbot-message {
+    background-color: #dce7fa; /* Light blue for messages */
+    color: #333;
+    border-radius: 10px;
+    padding: 12px;
+    word-break: break-word;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05); /* Subtle message shadow */
+}
+
+.ai-chatbot-message.user {
+    background-color: #007bff; /* Blue for user messages */
+    color: white;
+    align-self: flex-end;
+    border-radius: 10px 10px 0 10px; /* Different rounding for user messages */
+}
+
+.ai-chatbot-message.ai {
+    align-self: flex-start;
+    border-radius: 0 10px 10px 10px; /* Different rounding for AI messages */
+    /* Add a subtle "typing" indicator style if desired */
+}
+
+.ai-chatbot-welcome-message {
+    color: #777;
+    font-style: italic;
+    text-align: center;
+    margin-top: 40px;
+    font-size: 18px;
+}
+
+/* Input Area (Modern Look) */
+.ai-chatbot-input-area {
+    display: flex;
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow on top border */
+}
+
+.ai-chatbot-input {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+.ai-chatbot-send-button {
+    background-color: #dc2626; /* CDW Red */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 15px;
+    outline: none;
+    transition: background-color 0.2s ease;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.ai-chatbot-send-button:hover {
+    background-color: #aa0029;
+}

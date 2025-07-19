@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import './App.css';
@@ -8,17 +8,16 @@ import ProductDetailsPage from './pages/productDetailsPage/ProductDetailsPage';
 import ShoppingCart from './pages/shoppingCart/ShoppingCart';
 import Checkout from './pages/checkout/Checkout';
 import OrderConfirmation from './pages/orderConfirmation/OrderConfirmation';
+import AiChatbot from './containers/aiChatbot/AiChatbot';
+import AiModeToggle from './containers/aiModeToggle/AiModeToggle';
 
 const App = () => {
-  const links = [
-    { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
-    { href: '/contact', label: 'Contact' },
-  ];
+  const [isNormalMode, setIsNormalMode] = useState(false);
 
   return (
     <Router>
-      <Header logo="/path/to/logo.png" links={links} />
+      {isNormalMode?<AiModeToggle isNormalMode={isNormalMode} setIsNormalMode={setIsNormalMode} /> :<>
+      <Header logo="/path/to/logo.png" isNormalMode={isNormalMode} setIsNormalMode={setIsNormalMode} />
       <Routes>
         <Route path="/" element={<PDP />} />
         <Route path="/details/:id" element={<ProductDetailsPage />} />
@@ -27,7 +26,7 @@ const App = () => {
         <Route path="/orderConfirmation" element={<OrderConfirmation />} />
         {/* Add more routes as needed */}
       </Routes>
-      <Chatbot />
+      <Chatbot /></>}
     </Router>
   );
 };

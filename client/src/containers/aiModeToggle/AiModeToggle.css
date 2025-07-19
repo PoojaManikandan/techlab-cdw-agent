@@ -1,0 +1,168 @@
+/* AiModeToggle.css */
+
+.ai-mode-toggle-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f7f7f7;
+}
+
+/* Header */
+.ai-mode-toggle-header {
+    background-color: #fff;
+    color: #333;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.ai-mode-toggle-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #dc2626;
+}
+
+.toggle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-icon img {
+    width: 30px;
+    height: 30px;
+}
+
+.ai-mode-toggle-right {
+    display: flex;
+    align-items: center;
+}
+
+.ai-mode-toggle-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.ai-mode-toggle-button.active {
+    background-color: #5cb85c; /* A different color to indicate active AI mode */
+}
+
+.ai-mode-toggle-button:hover {
+    opacity: 0.9;
+}
+
+.ai-mode-toggle-icon {
+    font-size: 18px;
+}
+
+/* Main Content */
+.ai-mode-toggle-main-content {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden; /* Prevent scrollbars on the main content */
+    gap: 40px
+}
+
+/* Normal Cart View */
+.ai-mode-normal-cart {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* AI Mode Layout */
+.ai-mode-chatbot-section {
+    flex: 1 1; /* Takes 75% of the width */
+    height: 92vh;
+    overflow: hidden;
+    /* Creative AI World Styling */
+    color: #e0f7fa; /* Light, contrasting text color */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); /* Shadow to separate from the cart preview */
+}
+
+/* Adjust the AiChatbot container to fit within this section */
+.ai-mode-chatbot-section > div { /* Targeting the root of AiChatbot */
+    height: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+}
+
+.ai-mode-chatbot-section .ai-chatbot-header {
+    background-color: #dc2626; /* Darker overlay on header */
+}
+
+
+
+.ai-mode-chatbot-section .ai-chatbot-input::placeholder {
+    color: #b0bec5;
+}
+
+.ai-mode-chatbot-section .ai-chatbot-send-button {
+    background-color: #150404; /* Cyan accent color */
+    color: #fff;
+}
+.ai-mode-chatbot-section .ai-chatbot-message {
+    background-color: #f0f0f0; /* Teal for user messages in AI mode */
+    color: #150404; 
+    
+    border-radius: 8px;
+}
+
+.ai-mode-chatbot-section .ai-chatbot-message.user {
+    background-color: #150404;
+    color: #cfd8dc;
+}
+
+.ai-mode-cart-preview {
+    flex: 0.25; /* Takes 25% of the width */
+    height: 100%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-left: 1px solid #ddd;
+    overflow-y: auto;
+}
+
+.ai-mode-cart-preview-header h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.ai-mode-cart-preview-items p {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.ai-mode-cart-preview-actions button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s ease;
+}
+
+.ai-mode-cart-preview-actions button:hover {
+    opacity: 0.9;
+}
+
+.toggle-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px;
+}

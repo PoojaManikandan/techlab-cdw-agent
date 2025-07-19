@@ -1,0 +1,220 @@
+/* MiniCart.css */
+
+.mini-cart-container {
+    font-family: Arial, sans-serif;
+    width: 100%; /* Adjust based on where it's placed */
+    max-width: 400px; /* Example max width for a sidebar cart */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    color: #333;
+}
+
+.mini-cart-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 30px;
+    color: #777;
+}
+
+.mini-cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.mini-cart-header h2 {
+    font-size: 24px;
+    font-weight: normal; /* Match the screenshot's lighter font weight */
+    margin: 0;
+    color: #000;
+}
+
+.mini-cart-continue-shopping-link {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.mini-cart-continue-shopping-link:hover {
+    text-decoration: underline;
+}
+
+.mini-cart-items-list {
+    margin-bottom: 20px;
+}
+
+.mini-cart-item {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    gap: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.mini-cart-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.mini-cart-item-image {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border: 1px solid #f0f0f0;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.mini-cart-item-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.mini-cart-item-stock {
+    font-size: 12px;
+    color: #28a745; /* Green for in stock */
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.mini-cart-item-name {
+    font-size: 15px;
+    font-weight: bold;
+    color: #000;
+    margin: 0 0 5px 0;
+    line-height: 1.3;
+}
+
+.mini-cart-item-part-numbers {
+    font-size: 12px;
+    color: #777;
+    margin: 0;
+}
+
+.mini-cart-item-price-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align prices and delete button to the right */
+    flex-shrink: 0; /* Prevent from shrinking */
+}
+
+.mini-cart-original-price {
+    font-size: 13px;
+    color: #888;
+    text-decoration: line-through;
+    margin-bottom: 2px;
+}
+
+.mini-cart-current-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.mini-cart-qty-input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #555;
+}
+
+.mini-cart-input-field {
+    width: 40px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    text-align: center;
+    -moz-appearance: textfield; /* Remove spinner for Firefox */
+}
+
+/* Remove default spinner for Chrome, Safari, Edge */
+.mini-cart-input-field::-webkit-outer-spin-button,
+.mini-cart-input-field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.mini-cart-delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #dc3545; /* Red for delete icon */
+    font-size: 18px;
+    transition: opacity 0.2s ease;
+}
+
+.mini-cart-delete-button:hover {
+    opacity: 0.7;
+}
+
+.mini-cart-delete-icon {
+    line-height: 1; /* Ensure icon is vertically centered */
+}
+
+
+.mini-cart-actions {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.mini-cart-action-link {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.mini-cart-action-link:hover {
+    text-decoration: underline;
+}
+
+.mini-cart-summary {
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    text-align: right;
+}
+
+.mini-cart-subtotal {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.mini-cart-subtotal-value {
+    font-weight: bold;
+    color: #000;
+}
+
+.mini-cart-checkout-button {
+    background-color: #333; /* Dark button color from order summary */
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 12px 25px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s ease;
+}
+
+.mini-cart-checkout-button:hover {
+    background-color: #555;
+}

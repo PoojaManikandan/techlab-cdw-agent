@@ -1,0 +1,146 @@
+/* ProductListingCard.css */
+
+.product-listing-card-container {
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    min-width: 300px; /* Adjust max-width as needed for a typical listing item */
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+}
+
+.product-listing-card-image-section {
+    flex-shrink: 0;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px; /* Fixed width for image section */
+    height: 120px; /* Fixed height for image section */
+    border: 1px solid #f0f0f0;
+    border-radius: 3px;
+}
+
+.product-listing-card-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.product-listing-card-details-section {
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+.product-listing-card-name {
+    font-size: 12px;
+    font-weight: bold;
+    color: #007bff; /* Blue for product name, common in listings */
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+}
+
+.product-listing-card-part-numbers {
+    font-size: 8px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.product-listing-card-reviews {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.product-listing-card-stars {
+    color: #f8ce0b; /* Yellow for stars */
+    margin-right: 5px;
+}
+
+.product-listing-card-price-add-section {
+    flex-shrink: 0;
+    text-align: right;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.product-listing-card-original-price {
+    font-size: 14px;
+    color: #888;
+    text-decoration: line-through;
+    margin-bottom: 2px;
+}
+
+.product-listing-card-current-price {
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.product-listing-card-availability {
+    font-size: 14px;
+    color: #28a745; /* Green for in stock */
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.product-listing-card-shipping-info {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.product-listing-card-qty-add {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-listing-card-qty-input {
+    width: 50px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 15px;
+    -moz-appearance: textfield; /* Remove spinner for Firefox */
+}
+
+/* Remove default spinner for Chrome, Safari, Edge */
+.product-listing-card-qty-input::-webkit-outer-spin-button,
+.product-listing-card-qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.product-listing-card-add-to-cart-button {
+    background-color: #333; /* Dark button color from CDW theme */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.product-listing-card-add-to-cart-button:hover {
+    background-color: #555;
+}
+
+.mini-product-card-container {
+    display: flex;
+    gap:12px;
+    width: 1000px;
+    overflow: scroll;
+}
