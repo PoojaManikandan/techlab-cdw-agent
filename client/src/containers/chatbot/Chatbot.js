@@ -61,6 +61,11 @@ function Chatbot() {
                     if (typeof text === 'string' && text.startsWith('"') && text.endsWith('"')) {
                         text = text.substring(1, text.length - 1);
                     }
+                    // Format text: ** to heading, * to bullet, /n to newline
+                    text = text
+                        .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // **heading**
+                        .replace(/^\* (.*)$/gm, '<li>$1</li>') // * bullet
+                        .replace(/\/n/g, '<br/>'); // /n newline
                     const newBotMessage = { sender: 'bot', text };
                     setMessages((prevMessages) => [...prevMessages, newBotMessage]);
                     setChatHistory((prevHistory) => [...prevHistory, { role: "model", parts: [{ text }] }]);

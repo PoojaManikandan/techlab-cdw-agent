@@ -5,7 +5,12 @@ function Message({ message }) {
     return (
         <div className={`chat-message ${messageClass}`}>
             <div className={`message-bubble ${messageClass}`}>
-                {message.text}
+                {/* Render HTML for bot messages, plain text for user */}
+                {message.sender === 'bot' ? (
+                    <span dangerouslySetInnerHTML={{ __html: message.text }} />
+                ) : (
+                    message.text
+                )}
             </div>
         </div>
     );
