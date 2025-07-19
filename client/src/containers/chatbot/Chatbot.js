@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Chatbot.css'; // Import the main chatbot CSS
 import ChatWindow from '../../components/chatWindow/ChatWindow';
 import ChatBubble from '../../components/chatBubble/ChatBubble';
+import axios from 'axios';
 
 function Chatbot() {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,42 +24,59 @@ function Chatbot() {
         setIsLoading(true);
 
         try {
-            // --- API Call to Gemini API ---
-            // Replace with your actual API key or leave empty for Canvas runtime
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const SESSION_ID = 's_103';
+            const requestBody = { text }; // or customize as needed
+            // const response = await axios.post(
+            //     `http://localhost:8000/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
+            //     {},
+            //     {
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         }
+            //     }
+            // );
 
-            const payload = { contents: chatHistory }; // Send full chat history for context
-
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            const result = await response.json();
-
-            let botResponseText = "Sorry, I couldn't get a response. Please try again.";
-
-            if (result.candidates && result.candidates.length > 0 &&
-                result.candidates[0].content && result.candidates[0].content.parts &&
-                result.candidates[0].content.parts.length > 0) {
-                botResponseText = result.candidates[0].content.parts[0].text;
-            } else {
-                console.error("Unexpected API response structure:", result);
+            // if(response.status === 200) {
+            if(true){
+                axios.post('http://localhost:8000/run', {
+                    appName: 'cdw_agent',
+                    userId: 'u_125',
+                    sessionId: `${SESSION_ID}`,
+                    newMessage: {
+                        role: 'user',
+                        parts: [
+                            {
+                                text: JSON.stringify(requestBody)
+                            }
+                        ]
+                    }
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    const text = response?.data[0]?.content?.parts[0]?.text;
+                    const newBotMessage = { sender: 'bot', text: JSON.stringify(text) };
+                    setMessages((prevMessages) => [...prevMessages, newBotMessage]);
+                    setChatHistory((prevHistory) => [...prevHistory, { role: "model", parts: [{ text: JSON.stringify(text) }] }]);
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    setMessages((prevMessages) => [
+                        ...prevMessages,
+                        { sender: 'bot', text: 'Oops! Something went wrong. Please try again later.' }
+                    ]);
+                    setIsLoading(false);
+                });
             }
-
-            const newBotMessage = { sender: 'bot', text: botResponseText };
-            setMessages((prevMessages) => [...prevMessages, newBotMessage]);
-            setChatHistory((prevHistory) => [...prevHistory, { role: "model", parts: [{ text: botResponseText }] }]);
-
         } catch (error) {
-            console.error("Error calling Gemini API:", error);
+            console.error('Error:', error);
             setMessages((prevMessages) => [
                 ...prevMessages,
                 { sender: 'bot', text: 'Oops! Something went wrong. Please try again later.' }
             ]);
-        } finally {
             setIsLoading(false);
         }
     };
