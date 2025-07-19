@@ -56,10 +56,14 @@ function Chatbot() {
                     }
                 })
                 .then(response => {
-                    const text = response?.data[0]?.content?.parts[0]?.text;
-                    const newBotMessage = { sender: 'bot', text: JSON.stringify(text) };
+                    let text = response?.data[0]?.content?.parts[0]?.text;
+                    // Remove surrounding quotes if present
+                    if (typeof text === 'string' && text.startsWith('"') && text.endsWith('"')) {
+                        text = text.substring(1, text.length - 1);
+                    }
+                    const newBotMessage = { sender: 'bot', text };
                     setMessages((prevMessages) => [...prevMessages, newBotMessage]);
-                    setChatHistory((prevHistory) => [...prevHistory, { role: "model", parts: [{ text: JSON.stringify(text) }] }]);
+                    setChatHistory((prevHistory) => [...prevHistory, { role: "model", parts: [{ text }] }]);
                     setIsLoading(false);
                 })
                 .catch(error => {
