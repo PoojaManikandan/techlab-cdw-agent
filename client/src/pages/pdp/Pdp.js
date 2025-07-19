@@ -10,7 +10,7 @@ function PDP() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8000/products')
+            .get('http://localhost:8080/products')
             .then((response) => {
                 setProducts(response.data);
             })

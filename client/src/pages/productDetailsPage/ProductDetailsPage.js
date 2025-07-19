@@ -13,7 +13,7 @@ function ProductDetailsPage() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8000/products/${params.id}`)
+            .get(`http://localhost:8080/products/${params.id}`)
             .then((response) => {
                 setProduct(response.data);
             })
