@@ -90,7 +90,6 @@ def get_products():
         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
 
 
-
 # @app.get("/products/{product_id}", response_model=ProductResponse)
 # def get_product(product_id: str):
 #     try:
@@ -102,7 +101,8 @@ def get_products():
 #             return JSONResponse(status_code=404, content={"status": "error", "message": "Product not found"})
 #     except Exception as e:
 #         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
-    
+
+
 @app.get("/products/{cdw}", response_model=ProductResponse)
 def get_product_by_cdw(cdw: str):
     try:
@@ -115,6 +115,7 @@ def get_product_by_cdw(cdw: str):
     except Exception as e:
         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
     
+
 def get_paypal_access_token():
     response = requests.post(
         "https://api-m.sandbox.paypal.com/v1/oauth2/token",
@@ -124,6 +125,7 @@ def get_paypal_access_token():
     )
     return response.json()["access_token"]
 
+
 @app.post("/api/paypal/capture-order/{order_id}")
 def capture_order(order_id: str):
     access_token = get_paypal_access_token()
@@ -132,3 +134,4 @@ def capture_order(order_id: str):
         headers={"Authorization": f"Bearer {access_token}"}
     )
     return res.json()
+

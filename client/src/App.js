@@ -20,7 +20,7 @@ const App = () => {
       <Header logo="/path/to/logo.png" isNormalMode={isNormalMode} setIsNormalMode={setIsNormalMode} />
       <Routes>
         <Route path="/" element={<PDP />} />
-        <Route path="/details/:id" element={<ProductDetailsPage />} />
+        <Route path="/details/:cdw" element={<ProductDetailsPage />} />
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orderConfirmation" element={<OrderConfirmation />} />
