@@ -52,7 +52,7 @@ function Header({isNormalMode, setIsNormalMode}) {
       <nav className="header-nav">
         <div className="header-nav-container">
           <div className="nav-links">
-            <a href="#">Hardware</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate('/'); }}>Hardware</a>
             <a href="#">Software</a>
             <a href="#">Services</a>
             <a href="#">IT Solutions</a>

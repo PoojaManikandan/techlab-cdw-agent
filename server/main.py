@@ -91,10 +91,22 @@ def get_products():
 
 
 
-@app.get("/products/{product_id}", response_model=ProductResponse)
-def get_product(product_id: str):
+# @app.get("/products/{product_id}", response_model=ProductResponse)
+# def get_product(product_id: str):
+#     try:
+#         product = products_collection.find_one({"id": product_id})
+#         if product:
+#             product["_id"] = str(product["_id"])
+#             return ProductResponse(**product)
+#         else:
+#             return JSONResponse(status_code=404, content={"status": "error", "message": "Product not found"})
+#     except Exception as e:
+#         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
+    
+@app.get("/products/{cdw}", response_model=ProductResponse)
+def get_product_by_cdw(cdw: str):
     try:
-        product = products_collection.find_one({"id": product_id})
+        product = products_collection.find_one({"cdw": cdw})
         if product:
             product["_id"] = str(product["_id"])
             return ProductResponse(**product)
