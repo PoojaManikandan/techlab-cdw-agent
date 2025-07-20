@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import ProductDetails from '../productDetails/ProductDetails';
 import ProductActions from '../productActions/ProductAction';
 import ProductImage from '../productImage/ProductImage';
@@ -6,11 +7,16 @@ import { useNavigate } from 'react-router-dom';
 
 function ProductCard({ product }) {
     const navigate = useNavigate();
-    const handleAddToCart = (quantity) => {
-        // This function is now passed down to ProductActions
-        console.log(`Added ${quantity} of product ${product.name} to cart.`);
-        navigate('/cart'); // Navigate to the cart page after adding
-        
+    const handleAddToCart = async (quantity) => {
+        try {
+            await axios.post('http://localhost:8080/cart/1234', {
+                cdw: product.cdw,
+                quantity: quantity
+            });
+            navigate('/cart'); // Navigate to the cart page after adding
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+        }
     };
 
     return (
