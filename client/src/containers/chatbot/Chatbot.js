@@ -56,7 +56,7 @@ function Chatbot() {
                     }
                 })
                 .then(response => {
-                    let text = response?.data[0]?.content?.parts[0]?.text;
+                    let text = response?.data[response.data.length - 1]?.content?.parts[0]?.text;
                     // Remove surrounding quotes if present
                     if (typeof text === 'string' && text.startsWith('"') && text.endsWith('"')) {
                         text = text.substring(1, text.length - 1);
