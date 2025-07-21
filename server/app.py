@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi import Query, Body
-
+from fastapi import Query
 from typing import List
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from models.products import Product, CartProduct
 from models.cart import Cart, AddToCartRequest
+from models.order import Order
 
 from pydantic.functional_validators import BeforeValidator
 from typing_extensions import Annotated
@@ -108,6 +108,35 @@ def add_to_cart(user_id: str, body: AddToCartRequest):
     except Exception as e:
         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
 
+
+@app.get("/order", response_model=List[Order])
+def get_order(user_id: str = Query(None), order_id: str = Query(None)):
+    try:
+        if order_id:
+            order = db.orders.find_one({"order_id": order_id})
+            if not order:
+                return JSONResponse(status_code=404, content={"status": "error", "message": "Order not found"})
+            return [Order(**order)]
+        elif user_id:
+            orders = list(db.orders.find({"user_id": user_id}))
+            if not orders:
+                return JSONResponse(status_code=404, content={"status": "error", "message": "No orders found for this user"})
+            return [Order(**order) for order in orders]
+        else:
+            return JSONResponse(status_code=400, content={"status": "error", "message": "Either user_id or order_id must be provided as a query parameter."})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
+    
+
+@app.post("/order", response_model=Order)
+def create_order(order: Order):
+    try:
+        order_dict = order.dict()
+        db.orders.insert_one(order_dict)
+        return Order(**order_dict)
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
+    
 
 def get_paypal_access_token():
     response = requests.post(
