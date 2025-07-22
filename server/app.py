@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, HTTPException ,status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi import Query
@@ -9,12 +9,17 @@ from pymongo.server_api import ServerApi
 from models.products import Product, CartProduct
 from models.cart import Cart, AddToCartRequest
 from models.order import Order
+from models.user import User
 
 from pydantic.functional_validators import BeforeValidator
 from typing_extensions import Annotated
 import requests
 
 import config
+from auth import create_access_token
+from deps import get_current_user
+from passlib.context import CryptContext
+
 
 app = FastAPI(
     title="CDW ECommerce API",
@@ -33,7 +38,25 @@ app.add_middleware(
 client = MongoClient(config.MONGODB_URL, server_api=ServerApi('1'))
 db = client.cdw_warehouse
 products_collection = db.get_collection("products")
+users_collection = db.get_collection("users")
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def get_user_util(username: str):
+    try:
+        user = users_collection.find_one({"username": username})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        user["_id"] = str(user["_id"]) 
+        return user
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+def authenticate_user(username: str, password: str):
+    user = get_user_util(username)
+    if not user or not pwd_context.verify(password, user["password"]):
+        return False
+    return user
 
 @app.get("/")
 def read_root():
@@ -157,3 +180,37 @@ def capture_order(order_id: str):
     )
     return res.json()
 
+
+@app.post("/login")
+async def login(data: User):
+    user = authenticate_user(data.username, data.password)
+    if not user:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Bad credentials",
+                            headers={"WWW-Authenticate": "Bearer"})
+    token = create_access_token({"sub": user["username"]})
+    return {"access_token": token, "token_type": "bearer"}
+
+@app.post("/signup")
+def signup(user: User):
+    try:
+        existing_user = users_collection.find_one({"username": user.username})
+        if existing_user:
+            raise HTTPException(status_code=400, detail="User already exists")
+
+        hashed_password = pwd_context.hash(user.password)
+
+        user_data = {
+            "username": user.username,
+            "password": hashed_password
+        }
+
+        
+        users_collection.insert_one(user_data)
+
+        return {"status": "success", "message": "User created successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/protected")
+async def protected_route(current_user: str = Depends(get_current_user)):
+    return {"message": f"Hello, {current_user}! You’re authenticated "}

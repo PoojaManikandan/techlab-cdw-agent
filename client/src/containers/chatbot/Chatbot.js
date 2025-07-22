@@ -27,7 +27,7 @@ function Chatbot() {
             const SESSION_ID = 's_103';
             const requestBody = { text }; // or customize as needed
             // const response = await axios.post(
-            //     `http://localhost:8000/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
+            //     `http://localhost:8080/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
             //     {},
             //     {
             //         headers: {
@@ -38,7 +38,7 @@ function Chatbot() {
 
             // if(response.status === 200) {
             if(true){
-                axios.post('http://localhost:8000/run', {
+                axios.post('http://localhost:8080/run', {
                     appName: 'cdw_agent',
                     userId: 'u_125',
                     sessionId: `${SESSION_ID}`,
