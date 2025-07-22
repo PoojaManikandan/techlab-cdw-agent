@@ -12,5 +12,5 @@ pip3 install -r requirements.txt
 Steps to run:
 
 ```
-uvicorn main:app --reload --port 8080
+uvicorn app:app --reload --port 8080
 ```

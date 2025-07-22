@@ -1,93 +1,124 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './ShoppingCart.css'; // Dedicated CSS file for this component
 import { useNavigate } from 'react-router-dom';
 
 function ShoppingCart() {
     // Mock product data for the cart, now with keys exactly matching the provided object
-    const initialCartItems = [
-        {
-            id: '3',
-            name: 'StarTech.com 6ft HDMI Cable - 4K High Speed HDMI Cable w/ Ethernet - HDMI 1.4 - HDMI Monitor Cable - HDMI to HDMI Cable',
-            mfg: 'HDMM6', // Key now exactly matches 'mfg'
-            cdw: '3036583', // Key now exactly matches 'cdw'
-            unspsc: '26121600',
-            imageUrl: 'http://googleusercontent.com/file_content/1',
-            originalPrice: '13.99', // Key now exactly matches 'originalPrice'
-            price: '13.29', // Key now exactly matches 'price'
-            priceLabel: 'My CDW Price', // Key now exactly matches 'priceLabel'
-            reviews: {
-                stars: 4.5,
-                count: 14
-            },
-            availability: '1028 units In Stock',
-            availabilityText: 'Ships today if ordered within 5 hrs 4 mins',
-            additionalActions: [
-                { label: 'Add to Compare', type: 'checkbox' },
-                { label: 'Save to Favorites', type: 'checkbox' }
-            ],
-            specs: [],
-            quantity: 1, // Keep quantity for cart functionality
-        },
-        {
-            id: '3',
-            name: 'StarTech.com 6ft HDMI Cable - 4K High Speed HDMI Cable w/ Ethernet - HDMI 1.4 - HDMI Monitor Cable - HDMI to HDMI Cable',
-            mfg: 'HDMM6', // Key now exactly matches 'mfg'
-            cdw: '3036583', // Key now exactly matches 'cdw'
-            unspsc: '26121600',
-            imageUrl: 'http://googleusercontent.com/file_content/1',
-            originalPrice: '13.99', // Key now exactly matches 'originalPrice'
-            price: '13.29', // Key now exactly matches 'price'
-            priceLabel: 'My CDW Price', // Key now exactly matches 'priceLabel'
-            reviews: {
-                stars: 4.5,
-                count: 14
-            },
-            availability: '1028 units In Stock',
-            availabilityText: 'Ships today if ordered within 5 hrs 4 mins',
-            additionalActions: [
-                { label: 'Add to Compare', type: 'checkbox' },
-                { label: 'Save to Favorites', type: 'checkbox' }
-            ],
-            specs: [],
-            quantity: 1, // Keep quantity for cart functionality
-        },
-        {
-            id: '3',
-            name: 'StarTech.com 6ft HDMI Cable - 4K High Speed HDMI Cable w/ Ethernet - HDMI 1.4 - HDMI Monitor Cable - HDMI to HDMI Cable',
-            mfg: 'HDMM6', // Key now exactly matches 'mfg'
-            cdw: '3036583', // Key now exactly matches 'cdw'
-            unspsc: '26121600',
-            imageUrl: 'http://googleusercontent.com/file_content/1',
-            originalPrice: '13.99', // Key now exactly matches 'originalPrice'
-            price: '13.29', // Key now exactly matches 'price'
-            priceLabel: 'My CDW Price', // Key now exactly matches 'priceLabel'
-            reviews: {
-                stars: 4.5,
-                count: 14
-            },
-            availability: '1028 units In Stock',
-            availabilityText: 'Ships today if ordered within 5 hrs 4 mins',
-            additionalActions: [
-                { label: 'Add to Compare', type: 'checkbox' },
-                { label: 'Save to Favorites', type: 'checkbox' }
-            ],
-            specs: [],
-            quantity: 1, // Keep quantity for cart functionality
-        },
-    ];
+    // const initialCartItems = [
+    //     {
+    //         id: '3',
+    //         name: 'StarTech.com 6ft HDMI Cable - 4K High Speed HDMI Cable w/ Ethernet - HDMI 1.4 - HDMI Monitor Cable - HDMI to HDMI Cable',
+    //         mfg: 'HDMM6', // Key now exactly matches 'mfg'
+    //         cdw: '3036583', // Key now exactly matches 'cdw'
+    //         unspsc: '26121600',
+    //         imageUrl: 'http://googleusercontent.com/file_content/1',
+    //         originalPrice: '13.99', // Key now exactly matches 'originalPrice'
+    //         price: '13.29', // Key now exactly matches 'price'
+    //         priceLabel: 'My CDW Price', // Key now exactly matches 'priceLabel'
+    //         reviews: {
+    //             stars: 4.5,
+    //             count: 14
+    //         },
+    //         availability: '1028 units In Stock',
+    //         availabilityText: 'Ships today if ordered within 5 hrs 4 mins',
+    //         additionalActions: [
+    //             { label: 'Add to Compare', type: 'checkbox' },
+    //             { label: 'Save to Favorites', type: 'checkbox' }
+    //         ],
+    //         specs: [],
+    //         quantity: 1, // Keep quantity for cart functionality
+    //     },
+    //     {
+    //         id: '2',
+    //         name: 'StarTech.com 6ft HDMI Cable - 4K High Speed HDMI Cable w/ Ethernet - HDMI 1.4 - HDMI Monitor Cable - HDMI to HDMI Cable',
+    //         mfg: 'HDMM6', // Key now exactly matches 'mfg'
+    //         cdw: '3036583', // Key now exactly matches 'cdw'
+    //         unspsc: '26121600',
+    //         imageUrl: 'http://googleusercontent.com/file_content/1',
+    //         originalPrice: '13.99', // Key now exactly matches 'originalPrice'
+    //         price: '13.29', // Key now exactly matches 'price'
+    //         priceLabel: 'My CDW Price', // Key now exactly matches 'priceLabel'
+    //         reviews: {
+    //             stars: 4.5,
+    //             count: 14
+    //         },
+    //         availability: '1028 units In Stock',
+    //         availabilityText: 'Ships today if ordered within 5 hrs 4 mins',
+    //         additionalActions: [
+    //             { label: 'Add to Compare', type: 'checkbox' },
+    //             { label: 'Save to Favorites', type: 'checkbox' }
+    //         ],
+    //         specs: [],
+    //         quantity: 1, // Keep quantity for cart functionality
+    //     },
+    //     {
+    //         id: '1',
+    //         name: 'StarTech.com 6ft HDMI Cable - 4K High Speed HDMI Cable w/ Ethernet - HDMI 1.4 - HDMI Monitor Cable - HDMI to HDMI Cable',
+    //         mfg: 'HDMM6', // Key now exactly matches 'mfg'
+    //         cdw: '3036583', // Key now exactly matches 'cdw'
+    //         unspsc: '26121600',
+    //         imageUrl: 'http://googleusercontent.com/file_content/1',
+    //         originalPrice: '13.99', // Key now exactly matches 'originalPrice'
+    //         price: '13.29', // Key now exactly matches 'price'
+    //         priceLabel: 'My CDW Price', // Key now exactly matches 'priceLabel'
+    //         reviews: {
+    //             stars: 4.5,
+    //             count: 14
+    //         },
+    //         availability: '1028 units In Stock',
+    //         availabilityText: 'Ships today if ordered within 5 hrs 4 mins',
+    //         additionalActions: [
+    //             { label: 'Add to Compare', type: 'checkbox' },
+    //             { label: 'Save to Favorites', type: 'checkbox' }
+    //         ],
+    //         specs: [],
+    //         quantity: 1, // Keep quantity for cart functionality
+    //     },
+    // ];
 
     const navigate = useNavigate();
-    const [cartItems, setCartItems] = useState(initialCartItems);
+    const [cartItems, setCartItems] = useState([]);
 
-    const handleQuantityChange = (id, newQuantity) => {
-        setCartItems(prevItems =>
-            prevItems.map(item =>
-                item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item
-            )
-        );
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/cart/1234')
+            .then((response) => {
+                // Map API response to flat cartItems array for rendering
+                const items = response.data.products.map(item => ({
+                    ...item.product,
+                    quantity: item.quantity
+                }));
+                setCartItems(items);
+            })
+            .catch((error) => {
+                console.error('Error fetching cart:', error);
+            });
+    }, []);
+
+    const handleQuantityChange = (cdw, newQuantity) => {
+        if (newQuantity < 1) return;
+        // Update quantity in backend using POST (body)
+        axios
+            .post('http://localhost:8080/cart/1234', {
+                cdw: cdw,
+                quantity: newQuantity
+            })
+            .then((response) => {
+                // Update local state with new cart from backend
+                const items = response.data.products.map(item => ({
+                    ...item.product,
+                    quantity: item.quantity
+                }));
+                setCartItems(items);
+            })
+            .catch((error) => {
+                console.error('Error updating quantity:', error);
+            });
     };
 
     const handleRemoveItem = (id) => {
+        // Optionally implement backend removal here
         setCartItems(prevItems => prevItems.filter(item => item.id !== id));
     };
 
@@ -126,7 +157,6 @@ function ShoppingCart() {
                                     <h3 className="cart-item-name">{item.name}</h3>
                                     <p className="cart-item-codes">
                                         MFG#: {item.mfg} | CDW#: {item.cdw}
-                                        {item.unspsc && ` | UNSPSC: ${item.unspsc}`}
                                     </p>
                                     <p className="cart-item-availability">
                                         <span className="cart-availability-dot"></span> {item.availability}
@@ -134,18 +164,16 @@ function ShoppingCart() {
                                     <p className="cart-item-availability-text">{item.availabilityText}</p>
                                 </div>
                                 <div className="cart-item-price-quantity">
-                                    {item.originalPrice && <p className="cart-item-original-price">${parseFloat(item.originalPrice).toFixed(2)}</p>}
                                     <p className="cart-item-current-price">${parseFloat(item.price).toFixed(2)}</p>
-                                    {item.priceLabel && <p className="cart-item-price-label">{item.priceLabel}</p>}
                                     <div className="cart-quantity-selector">
-                                        <button onClick={() => handleQuantityChange(item.id, item.quantity - 1)}>-</button>
+                                        <button onClick={() => handleQuantityChange(item.cdw, item.quantity - 1)}>-</button>
                                         <input
                                             type="number"
                                             value={item.quantity}
-                                            onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                                            onChange={(e) => handleQuantityChange(item.cdw, parseInt(e.target.value))}
                                             min="1"
                                         />
-                                        <button onClick={() => handleQuantityChange(item.id, item.quantity + 1)}>+</button>
+                                        <button onClick={() => handleQuantityChange(item.cdw, item.quantity + 1)}>+</button>
                                     </div>
                                     <p className="cart-item-total">${(parseFloat(item.price) * item.quantity).toFixed(2)}</p>
                                     <button

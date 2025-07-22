@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './Checkout.css'; // Dedicated CSS for this component
 import PayPalIntegration from '../../containers/payPalIntegration/PayPalIntegration';
 
-function Checkout({ subtotal = 29.43, shipping = 74.93 }) {
+function Checkout({ shipping = 10.00 }) {
+    const [subtotal, setSubtotal] = useState(0);
     const orderTotal = subtotal + shipping;
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/cart/1234')
+            .then(response => {
+                setSubtotal(response.data.total_price || 0);
+            })
+            .catch(error => {
+                console.error('Error fetching cart subtotal:', error);
+            });
+    }, []);
 
     const handleReviewOrder = () => {
         alert('Reviewing your order!');

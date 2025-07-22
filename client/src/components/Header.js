@@ -4,17 +4,21 @@ import './Header.css'; // Import the CSS file
 import logo from '../images/logo.png'; // Adjust the path as necessary
 import { useNavigate } from 'react-router-dom';
 import chatbotlogo from '../images/chatbotlogo.png'; 
+import { useLocation } from 'react-router-dom';
 
 function Header({isNormalMode, setIsNormalMode}) {
-  
+  const location = useLocation();
   const navigate = useNavigate();
 
   const toggleMode = () => {
     setIsNormalMode(!isNormalMode);
   };
 
+  const currentPage = location.pathname;
+
+  
   return (
-    <header className="w-full">
+    (currentPage!=="/login")&&<header className="w-full">
       {/* Main Header Section */}
       <div className="header-main">
         <div className="header-container">
@@ -52,7 +56,7 @@ function Header({isNormalMode, setIsNormalMode}) {
       <nav className="header-nav">
         <div className="header-nav-container">
           <div className="nav-links">
-            <a href="#">Hardware</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate('/'); }}>Hardware</a>
             <a href="#">Software</a>
             <a href="#">Services</a>
             <a href="#">IT Solutions</a>
