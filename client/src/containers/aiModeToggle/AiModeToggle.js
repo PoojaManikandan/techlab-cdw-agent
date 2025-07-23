@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import './AiModeToggle.css'; // Dedicated CSS for this component
 import AiChatbot from '../aiChatbot/AiChatbot';
 import MiniCart from '../miniCart/MiniCart';
-import chatbotlogo from '../../images/chatbotlogo.png'; // Adjust the path as necessary
+import chatbotlogo from '../../images/chatbot.png'; // Adjust the path as necessary
+import cdwlogo from '../../images/cdwWhite.png'
+import OrderConfirmation from '../../pages/orderConfirmation/OrderConfirmation';
+import MiniOrderConfirmation from '../miniOrderConfirmation/MiniOrderConfirmation';
 
 function AiModeToggle({isNormalMode, setIsNormalMode}) {
 
@@ -11,7 +14,12 @@ function AiModeToggle({isNormalMode, setIsNormalMode}) {
   };
 
     return (
+
         <div className="ai-mode-toggle-container">
+          <header className="ai-chatbot-header">
+                <div className="ai-chatbot-logo">
+                    <img src={cdwlogo} alt="logo" width={80} />
+                </div>
             <div className="toggle-wrapper">
                         <label htmlFor="mode-toggle" className="toggle-label">
                           <div className="toggle-container"> {/* Added a container for positioning */}
@@ -32,6 +40,7 @@ function AiModeToggle({isNormalMode, setIsNormalMode}) {
                           </div>
                         </label>
                       </div>
+            </header>
             {/* Main Content Area */}
             <div className="ai-mode-toggle-main-content">
                     <>
@@ -39,10 +48,13 @@ function AiModeToggle({isNormalMode, setIsNormalMode}) {
                         <div className="ai-mode-chatbot-section">
                             <AiChatbot /> {/* Render the full-screen chatbot */}
                         </div>
+                        <div className='vertical-separator'></div>
                         <MiniCart />
+                        {/* <MiniOrderConfirmation /> */}
                     </>
                 
             </div>
+
         </div>
     );
 }

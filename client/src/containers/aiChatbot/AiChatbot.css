@@ -20,6 +20,7 @@
     gap: 30px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle header shadow */
     z-index: 10; /* Ensure header is above other elements */
+    justify-content: space-between;
 }
 
 .ai-chatbot-logo {
@@ -108,7 +109,6 @@
     padding: 20px;
     border-top: 1px solid #ccc;
     background-color: #fff;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow on top border */
 }
 
 .ai-chatbot-input {

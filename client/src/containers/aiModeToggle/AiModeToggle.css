@@ -70,7 +70,7 @@
     display: flex;
     flex-grow: 1;
     overflow: hidden; /* Prevent scrollbars on the main content */
-    gap: 40px
+    gap: 12px;
 }
 
 /* Normal Cart View */
@@ -86,7 +86,6 @@
     overflow: hidden;
     /* Creative AI World Styling */
     color: #e0f7fa; /* Light, contrasting text color */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); /* Shadow to separate from the cart preview */
 }
 
 /* Adjust the AiChatbot container to fit within this section */
@@ -164,5 +163,15 @@
 .toggle-wrapper {
     display: flex;
     justify-content: flex-end;
-    margin: 20px;
+}
+
+.vertical-separator {
+    height: 75vh;
+    border: 1px solid #ccc;
+    position: relative;
+    top: 100px;
+}
+
+.toggle-background.dark-mode-bg ~ .toggle-dot {
+    background-color: #fff;
 }

@@ -3,6 +3,7 @@ import './AiChatbot.css'; // Dedicated CSS for this component
 import MiniOrderCard from '../miniOrderCard/MiniOrderCard';
 import MiniProductCard from '../miniProductCard/MiniProductCard';
 import cdwlogo from '../../images/cdwWhite.png'
+import PayPalIntegration from '../payPalIntegration/PayPalIntegration';
 
 function AiChatbot() {
     // Messages can now contain 'text' or 'component'
@@ -79,6 +80,15 @@ function AiChatbot() {
                     ]
                 }
             };
+        } else if (userMessage.includes('payment')) {
+            return {
+                type: 'component',
+                content: {
+                    component: 'Payment',
+                }
+
+            }
+
         }
     };
 
@@ -91,6 +101,8 @@ function AiChatbot() {
                     return <MiniOrderCard {...msg.content.props} />;
                 case 'MiniProductCard':
                     return <MiniProductCard products={msg.content.props} />;
+                case 'Payment':
+                    return <div className="payment-component"><PayPalIntegration amount={2323} currency="USD"  /></div>;
                 default:
                     return <p>Unknown component</p>;
             }
@@ -99,13 +111,7 @@ function AiChatbot() {
     };
 
     return (
-        <div className="ai-chatbot-container">
-            {/* Header Area (Consistent with CDW Theme) */}
-            <header className="ai-chatbot-header">
-                <div className="ai-chatbot-logo">
-                    <img src={cdwlogo} alt="logo" width={80} />
-                </div>
-            </header>
+        <div className="ai-chatbot-container">            
 
             {/* Chat Message Area */}
             <div className="ai-chatbot-chat-area" ref={chatContainerRef}>

@@ -186,7 +186,7 @@ body {
 }
 
 .toggle-background.normal-mode-bg {
-    background-color: #dc2626; /* gray-700 */
+    background-color: #fff; /* gray-700 */
 }
 
 .toggle-background.dark-mode-bg {
@@ -197,7 +197,7 @@ body {
     position: absolute;
     left: 0.25rem; /* left-1 */
     top: 0.25rem; /* top-1 */
-    background-color: #fff;
+    background-color: #dc2626;
     width: 1.5rem; /* w-6 */
     height: 1.5rem; /* h-6 */
     border-radius: 9999px; /* rounded-full */
@@ -216,7 +216,7 @@ body {
 }
 
 .toggle-text.normal-mode-text {
-    color: #dc2626; /* gray-600 */
+    color: #fff; /* gray-600 */
 }
 
 .toggle-text.dark-mode-text {
