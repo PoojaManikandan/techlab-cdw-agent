@@ -3,22 +3,22 @@
 ### Install and Run Backend
 ```bash
 cd adk-server
+
+python3 -m venv venv
+source venv/bin/activate
+
 pip install -r requirements.txt
-cp .env.example .env
 # Edit the .env file and add necessary credentials
 adk run <folder_name>
 ```
 
 ### Run API Server Only
 ```bash
-cd server
-adk api_server
 adk api_server --allow_origins http://localhost:3000
 ```
 
 ### Run Dev UI (ADK web)
 ```bash
-cd server
 adk web
 ```
 
