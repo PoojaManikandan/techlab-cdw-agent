@@ -1,2 +1,6 @@
 google-adk
+google-adk[eval]
 google-cloud-aiplatform
+rouge-score 
+pandas 
+tabulate 

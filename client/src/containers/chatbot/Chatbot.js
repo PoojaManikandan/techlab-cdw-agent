@@ -13,7 +13,7 @@ function Chatbot() {
     // Initial welcome message
     useEffect(() => {
         setMessages([
-            { sender: 'bot', text: 'Hi there! How can I assist you today?' }
+            { sender: 'bot', text: "Hi there I'm CDW Agent, I'm helpful in fetching products, order processing, quote creation etc! How can I assist you today?" }
         ]);
     }, []);
 
