@@ -48,7 +48,7 @@ function AiModeToggle({isNormalMode, setIsNormalMode}) {
                         <div className="ai-mode-chatbot-section">
                             <AiChatbot /> {/* Render the full-screen chatbot */}
                         </div>
-                        <div className='vertical-separator'></div>
+                        
                         <MiniCart />
                         {/* <MiniOrderConfirmation /> */}
                     </>

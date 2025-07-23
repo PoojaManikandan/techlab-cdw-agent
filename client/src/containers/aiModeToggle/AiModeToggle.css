@@ -71,6 +71,7 @@
     flex-grow: 1;
     overflow: hidden; /* Prevent scrollbars on the main content */
     gap: 12px;
+    background-color: white;
 }
 
 /* Normal Cart View */
@@ -165,12 +166,7 @@
     justify-content: flex-end;
 }
 
-.vertical-separator {
-    height: 75vh;
-    border: 1px solid #ccc;
-    position: relative;
-    top: 100px;
-}
+
 
 .toggle-background.dark-mode-bg ~ .toggle-dot {
     background-color: #fff;
