@@ -24,3 +24,6 @@ Dockerfile
 
 # logs
 *.log
+
+# Azure config (not needed in image)
+azure.config

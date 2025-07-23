@@ -47,3 +47,6 @@ pylint-report.txt
 
 # MacOS
 .DS_Store
+
+# Azure config (contains secrets)
+azure.config

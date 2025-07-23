@@ -26,3 +26,7 @@ adk web
 Use the resource - [ADK Testing](https://google.github.io/adk-docs/get-started/testing/#local-testing)
 
 ---
+
+### Deploy to AZURE 
+chmod +x deploy.sh
+./deploy.sh

@@ -14,3 +14,8 @@ Steps to run:
 ```
 uvicorn app:app --reload --port 8080
 ```
+```
+
+### Deploy to AZURE 
+chmod +x deploy.sh
+./deploy.sh

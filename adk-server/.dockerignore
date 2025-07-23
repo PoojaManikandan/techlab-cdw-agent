@@ -29,3 +29,6 @@ htmlcov/
 # Environment files
 .env
 .env.*
+
+# Azure config (not needed in image)
+azure.config
