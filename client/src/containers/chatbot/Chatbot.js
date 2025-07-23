@@ -4,12 +4,13 @@ import ChatWindow from '../../components/chatWindow/ChatWindow';
 import ChatBubble from '../../components/chatBubble/ChatBubble';
 import axios from 'axios';
 
+
 function Chatbot() {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [chatHistory, setChatHistory] = useState([]); // For API context
-
+    const ADK_SERVER_URL = window.REACT_APP_ADK_SERVER_URL
     // Initial welcome message
     useEffect(() => {
         setMessages([
@@ -26,6 +27,7 @@ function Chatbot() {
         try {
             const SESSION_ID = 's_103';
             const requestBody = { text }; // or customize as needed
+
             // const response = await axios.post(
             //     `http://localhost:8000/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
             //     {},
@@ -37,8 +39,9 @@ function Chatbot() {
             // );
 
             // if(response.status === 200) {
+            console.log('ADK_SERVER_URL:', ADK_SERVER_URL);
             if(true){
-                axios.post('http://localhost:8000/run', {
+                axios.post(`${ADK_SERVER_URL}/run`, {
                     appName: 'cdw_agent',
                     userId: 'u_125',
                     sessionId: `${SESSION_ID}`,

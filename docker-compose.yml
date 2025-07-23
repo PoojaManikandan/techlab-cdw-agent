@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  product-server:
+    build: ./server
+    image: product-server
+    networks:
+      - agent_network
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - PAYPAL_CLIENT_ID=AUOZk8P_nDqBYoT0JmyvwX0Z8fCS-iUbHJk-vVKsuC7S3oEIGHRI8E-N5o_vqtC5UxOf-0JoM2hm7d9d
+      - PAYPAL_CLIENT_SECRET=EFIlPv8QDaRx4zqVziEiqqlGbA6azDuRr8Misau21fZW4H_AwiE1_vABV0ID0foC2JorIcXfi0tOHmg3
+      - MONGODB_URL=mongodb+srv://kavya-cdw:kavya-cdw@kcluster.kmbuu.mongodb.net/?retryWrites=true&w=majority&appName=KCluster
+
+  adk-server:
+    build: ./adk-server
+    image: adk-server
+    networks:
+      - agent_network
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - PRODUCT_BASE_URL=http://product-server:8080
+      - GOOGLE_GENAI_USE_VERTEXAI=0
+      - GOOGLE_API_KEY=AIzaSyCL6FZ3FsuvR4Lz3Yy6k63b--AHXg5SPhU
+    depends_on:
+      - product-server
+
+networks:
+    agent_network:
+      driver: bridge

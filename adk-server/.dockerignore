@@ -1,0 +1,31 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Venvs
+venv/
+.venv/
+env/
+
+# Git
+.git
+.gitignore
+
+# Dev tools
+.vscode/
+.idea/
+
+# Docker and build
+Dockerfile
+.dockerignore
+
+# Tests & coverage
+tests/
+.coverage
+.pytest_cache/
+htmlcov/
+*.log
+
+# Environment files
+.env
+.env.*

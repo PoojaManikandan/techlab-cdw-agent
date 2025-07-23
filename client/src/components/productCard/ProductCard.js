@@ -7,9 +7,10 @@ import { useNavigate } from 'react-router-dom';
 
 function ProductCard({ product }) {
     const navigate = useNavigate();
+    const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL
     const handleAddToCart = async (quantity) => {
         try {
-            await axios.post('http://localhost:8080/cart/1234', {
+            await axios.post(`${PRODUCT_SERVER_URL}/cart/1234`, {
                 cdw: product.cdw,
                 quantity: quantity
             });
@@ -18,7 +19,6 @@ function ProductCard({ product }) {
             console.error('Error adding to cart:', error);
         }
     };
-
     return (
         <div className="product-card">
             <ProductImage imageUrl={product.imageUrl} altText={product.name} wrapperClass={'product-image-section'} className={'product-image'} />

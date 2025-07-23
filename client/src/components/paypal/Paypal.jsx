@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Paypal({ totalAmount }) {
 
   const navigate = useNavigate();
-  
+  const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL
   return (
     <PayPalButtons
       createOrder={(data, actions) =>
@@ -25,7 +25,7 @@ export default function Paypal({ totalAmount }) {
       onApprove={async (data, actions) => {
         const details = await actions.order.capture();
         await fetch(
-          `http://localhost:8080/api/paypal/capture-order/${data.orderID}`,
+          `${PRODUCT_SERVER_URL}/api/paypal/capture-order/${data.orderID}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

@@ -9,11 +9,8 @@ from pymongo.server_api import ServerApi
 from models.products import Product, CartProduct
 from models.cart import Cart, AddToCartRequest
 from models.order import Order
-
-from pydantic.functional_validators import BeforeValidator
-from typing_extensions import Annotated
+import os
 import requests
-
 import config
 
 app = FastAPI(
@@ -21,10 +18,12 @@ app = FastAPI(
     summary="API for managing CDW e-commerce operations"
 )
 
+frontend_origin = os.environ.get("FRONTEND_ORIGIN", "http://localhost:3000")
+
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React dev server
+    allow_origins=[frontend_origin, "*"],  # React dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -10,7 +10,7 @@ function PayPalIntegration({ amount, currency = "USD" }) {
     <div className="paypal-integration-container">
       <PayPalScriptProvider
         options={{
-          "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
+          "client-id": window.REACT_APP_PAYPAL_CLIENT_ID,
           currency: currency,
           intent: "capture",
         }}
