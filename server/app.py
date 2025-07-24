@@ -19,7 +19,7 @@ import config
 from auth import create_access_token
 from deps import get_current_user
 from passlib.context import CryptContext
-
+import random
 
 app = FastAPI(
     title="CDW ECommerce API",
@@ -57,6 +57,10 @@ def authenticate_user(username: str, password: str):
     if not user or not pwd_context.verify(password, user["password"]):
         return False
     return user
+
+
+
+
 
 @app.get("/")
 def read_root():
@@ -154,10 +158,12 @@ def get_order(user_id: str = Query(None), order_id: str = Query(None)):
 @app.post("/order", response_model=Order)
 def create_order(order: Order):
     try:
+        print( f"Creating order: {order}")
         order_dict = order.dict()
         db.orders.insert_one(order_dict)
         return Order(**order_dict)
     except Exception as e:
+        print(f"Error creating order: {str(e)}")
         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
 
 @app.put("/order/{order_id}", response_model=Order)
@@ -200,6 +206,18 @@ async def login(data: User):
     token = create_access_token({"sub": user["username"]})
     return {"access_token": token, "token_type": "bearer"}
 
+def generate_unique_4_digit_id(users_collection):
+    unique = False
+    user_id = None
+
+    while not unique:
+        user_id = random.randint(1000, 9999)
+        existing_user = users_collection.find_one({"user_id": user_id})
+        if not existing_user:
+            unique = True
+
+    return user_id
+
 @app.post("/signup")
 def signup(user: User):
     try:
@@ -210,6 +228,7 @@ def signup(user: User):
         hashed_password = pwd_context.hash(user.password)
 
         user_data = {
+            "user_id": str(generate_unique_4_digit_id(users_collection)),
             "username": user.username,
             "password": hashed_password
         }
@@ -224,3 +243,4 @@ def signup(user: User):
 @app.get("/protected")
 async def protected_route(current_user: str = Depends(get_current_user)):
     return {"message": f"Hello, {current_user}! You’re authenticated "}
+
