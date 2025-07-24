@@ -159,7 +159,17 @@ def create_order(order: Order):
         return Order(**order_dict)
     except Exception as e:
         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
-    
+
+@app.put("/order/{order_id}", response_model=Order)
+def update_order(order_id: str, order: Order):
+    try:
+        order_dict = order.dict()
+        result = db.orders.update_one({"order_id": order_id}, {"$set": order_dict})
+        if result.matched_count == 0:
+            return JSONResponse(status_code=404, content={"status": "error", "message": "Order not found"})
+        return Order(**order_dict)
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})    
 
 def get_paypal_access_token():
     response = requests.post(
