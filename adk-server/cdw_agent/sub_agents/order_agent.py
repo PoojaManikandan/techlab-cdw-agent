@@ -87,7 +87,7 @@ def create_order_from_cart_handler(query: str) -> dict:
     Create an order from the user's cart.
 
     Args:
-        query (str): The query string containing the user ID or other parameters.
+        query (str): The query string containing the user ID or other parameters but this is for overwriting the user ID by default this is not required.
 
     Returns:
         dict: A dictionary containing the order details or an exception message.
