@@ -8,6 +8,8 @@ import requests
 
 from google.adk.agents.callback_context import CallbackContext
 
+MODEL_GPT_41 = os.getenv("MODEL_GPT_41", "azure/gpt-4.1")
+
 # 
 # KNOWN ISSUE 2025/04/29: 
 # 

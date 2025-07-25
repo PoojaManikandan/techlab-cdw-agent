@@ -163,6 +163,7 @@ def get_quote(user_id: str, quote_id: str):
 
 @app.post("/quote/{user_id}", response_model=Quote)
 def add_to_quote(user_id: str, body: AddToQuoteRequest):
+    print(f"Adding to quote for user {user_id} with body: {body}")
     try:
         quote_products = body.products
         quoted_price = body.quoted_price

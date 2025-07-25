@@ -1,5 +1,7 @@
 import requests, re
+from google.adk.models.lite_llm import LiteLlm
 from .prompt import CART_AGENT_INSTRUCTION
+from ..util import MODEL_GPT_41
 from google.adk.agents.llm_agent import Agent
 
 CART_URL = "http://localhost:8080/cart/{}"
@@ -97,7 +99,7 @@ def get_cart_agent_handler(query: str):
     
 
 cart_agent = Agent(
-    model='gemini-2.5-flash',
+    model=LiteLlm(MODEL_GPT_41),
     name='cart_agent',
     instruction=CART_AGENT_INSTRUCTION,
     tools=[get_cart_agent_handler, post_cart_agent_handler]

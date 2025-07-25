@@ -14,7 +14,7 @@ def create_text_embedding_model():
         azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
         azure_deployment=os.getenv("AZURE_OPENAI_TEXT_EMBEDDING_DEPLOYMENT_NAME"),
         openai_api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
-        api_key=os.getenv("AZURE_OPENAI_API_APIKEY"),
+        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
     )
 
 
@@ -26,3 +26,5 @@ def create_llm_model(deployment_name=os.getenv("AZURE_OPENAI_GPT-4O_DEPLOYMENT_N
     return AzureChatOpenAI(
         deployment_name=deployment_name
     )
+
+print(create_llm_model().invoke("Hi there!").content)  # Test the model creation

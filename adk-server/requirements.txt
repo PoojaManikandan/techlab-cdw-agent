@@ -9,3 +9,4 @@ langchain-mongodb
 langchain-openai
 pymongo
 python-dotenv
+litellm

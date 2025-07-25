@@ -1,13 +1,23 @@
 from google.adk.agents.llm_agent import Agent
 
-# from .prompt import QUOTE_AGENT_INSTRUCTION
-import vectorstore_utils
-
+from .prompt import QUOTE_AGENT_INSTRUCTION
 import requests, re
+from pydantic import BaseModel
+from typing import List
+import json
 
 QUOTE_URL = "http://localhost:8080/quote/{}"
 QUOTE_BY_ID_URL = "http://localhost:8080/quote/{}/{}"
 PRODUCT_DETAIL_URL = "http://localhost:8080/products/{}"
+
+class QuoteProduct(BaseModel):
+    cdw: str
+    quantity: int
+
+
+class AddToQuoteRequest(BaseModel):
+    products: List[QuoteProduct]
+    quoted_price: float
 
 
 def get_user_id():
@@ -61,84 +71,45 @@ def get_quote_handler(query: str):
         return {"error": f"Exception occurred: {str(e)}"}
 
 
-# # Helper function to fetch a single product by cdw
-# def fetch_product_by_cdw(cdw):
-#     try:
-#         response = requests.get(PRODUCT_DETAIL_URL.format(cdw))
-#         if response.status_code == 200:
-#             return response.json()
-#         elif response.status_code == 404:
-#             return {"error": "Product not found for cdw: {}".format(cdw)}
-#         else:
-#             return {"error": f"Failed to fetch product. Status code: {response.status_code}"}
-#     except Exception as e:
-#         return {"error": f"Exception occurred: {str(e)}"}
+def create_quote_handler(addToQuoteRequest: AddToQuoteRequest):
+    """
+    Creates a quote for the products specified in the request.
 
+    This function processes a list of products to create a quote. It extracts the product details from the request,
+    constructs a payload, and sends it to the quote API endpoint to create a new quote. The function handles HTTP responses
+    and returns the JSON data if successful, or an error message if the request fails or if an exception occurs.
 
-# def get_quantity_from_query(cdw):
+    Args:
+        addToQuoteRequest (dict or AddToQuoteRequest): The request containing products and quoted price.
 
+    Returns:
+        dict: The JSON response from the quote API if successful, or a dictionary containing an error message.
+    """
+    print("kavin: create_quote_handler called with request:", addToQuoteRequest)
+    payload = {
+        "products": addToQuoteRequest["products"],
+        "quoted_price": addToQuoteRequest["quoted_price"]
+    }
+    # print("kavin: payload for create_quote_handler:", payload)
+    # return payload
+    try:
+        user_id = get_user_id()
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(QUOTE_URL.format(user_id), json=payload, headers=headers)
 
-
-# def get_product_ids_from_query(query):
-#     """
-#     Retrieves a list of product dictionaries from the vectorstore based on a search query.
-
-#     This function queries the vectorstore using the provided query string, then iterates over the results,
-#     extracting the 'cdw' field from the metadata of each Document object. For each found product, it creates
-#     a dictionary with the product's 'cdw' (product ID) and a default 'quantity' of 1. The function returns
-#     a list of these product dictionaries.
-
-#     Args:
-#         query (str): The search query to use for retrieving relevant product documents from the vectorstore.
-
-#     Returns:
-#         list[dict]: A list of product dictionaries, each with keys:
-#             - 'cdw' (str): The product ID (CDW number) extracted from the metadata.
-#             - 'quantity' (int): The default quantity, set to 1.
-
-#     Example:
-#         >>> get_products_from_query("Products that has cdw 3036583")
-#         [{'cdw': '3036583', 'quantity': 1}, ...]
-#     """
-#     results = vectorstore_utils.get_relevant_results(query)
-#     product_ids = []
-#     for result in results:
-#         # result[0] is the Document object, result[0].metadata is a dict containing 'cdw'
-#         cdw = result[0].metadata.get("cdw")
-#         if cdw:
-#             product = {
-#                 "cdw": cdw,
-#                 "quantity": 0
-#             }
-#             product_ids.append(product)
-#     return product_ids
-
-
-# def create_quote_handler(query: str):
-#     try:
-#         products = get_products_from_query(query)
-#         quoted_price = get_quoted_price_from_query(query)
-
-#         payload = {
-#             "products" : products,
-#             "quoted_price": quoted_price
-#         }
-
-#         response = requests.post(QUOTE_URL, json=payload)
-#         if response.status_code == 200:
-#             return response.json()
-#         elif response.status_code == 404:
-#             return {"error": "Cart not found for user ID: {}".format(get_user_id())}
-#         else:
-#             return {"error": f"Failed to update cart. Status code: {response.status_code}"}
-#     except Exception as e:
-#         return {"error": f"Exception occurred: {str(e)}"}
-
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {"error": f"Failed to create quote. Status code: {response.status_code}"}
+    except Exception as e:
+        return {"error": f"Exception occurred: {str(e)}"}
+    
+ 
 
 
 quote_agent = Agent(
     name="quote_agent",
-    model='gemini-2.5-flash',
+    model="gemini-2.5-flash",
     instruction=QUOTE_AGENT_INSTRUCTION,
     tools=[create_quote_handler, get_quote_handler]
 )

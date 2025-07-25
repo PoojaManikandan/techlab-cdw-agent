@@ -1,6 +1,8 @@
 import requests
 import re
 from google.adk.agents.llm_agent import Agent
+from google.adk.models.lite_llm import LiteLlm
+from ..util import MODEL_GPT_41
 from .prompt import PRODUCT_AGENT_INSTRUCTION
 
 PRODUCT_LIST_URL = "http://localhost:8080/products"
@@ -47,7 +49,7 @@ def product_agent_handler(query: str):
         
 
 product_agent = Agent(
-    model='gemini-2.5-flash',
+    model=LiteLlm(MODEL_GPT_41),
     name='product_agent',
     instruction=PRODUCT_AGENT_INSTRUCTION,
     tools=[product_agent_handler]
