@@ -41,7 +41,8 @@ def create_vector_store():
     if index_exists:
         print("Vector Search index already exists.")
     else:
-        vector_store.create_vector_search_index(dimensions=os.getenv("MONGODB_ATLAS_VECTOR_STORE_DIMENSION"))
+        dimensions = int(os.getenv("MONGODB_ATLAS_VECTOR_STORE_DIMENSION"))
+        vector_store.create_vector_search_index(dimensions=dimensions)
         print("Vector Search index created.")
 
     return vector_store
@@ -125,12 +126,13 @@ def add_items_to_vector_store(product_summaries, vector_store):
     vector_store.add_documents(documents=documents, ids=list_of_cdw)
 
 
-if __name__ == "__main__":
+def create_and_populate_vector_store():
     """
-    Main entry point for the data_pipline script.
-    It creates the vector store, summarizes products, and adds them to the vector store.
+    Main function to create the vector store, summarize products,
+    and add them to the vector store.
+    This function is intended to be called as the entry point for the data pipeline.
     """
-    
+
     vector_store = create_vector_store()
     product_summaries = products_summarizer()
     
@@ -139,3 +141,27 @@ if __name__ == "__main__":
     else:
         add_items_to_vector_store(product_summaries, vector_store)
         print("Product summaries added to vector store.")
+
+    return vector_store
+
+
+def sample_vector_store_search():
+    """
+    Sample function to demonstrate a search in the vector store.
+    This function performs a similarity search and prints the results.
+    """
+
+    vector_store = create_vector_store()
+
+    results = vector_store.similarity_search_with_score("tell me a product that would be shipped within 6 hours", k=1)
+    print("Search results length: ", len(results))
+    for res, score in results:
+        print(f"* [SIM={score:3f}] {res.page_content} [{res.metadata}]")
+
+
+if __name__ == "__main__":
+    """
+    Main entry point for the data_pipline script.
+    """
+    create_and_populate_vector_store()
+

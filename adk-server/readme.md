@@ -40,5 +40,5 @@ adk eval \
 ### Create vector store and vector search index
 ```bash
 cd adk-server
-python products_embedding_agent/data_pipeline.py
+python products_vectorstore_pipeline/data_pipeline.py
 ```
