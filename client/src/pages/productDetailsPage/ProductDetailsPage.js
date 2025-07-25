@@ -10,10 +10,10 @@ import { useNavigate } from 'react-router-dom';
 function ProductDetailsPage() { 
     const params= useParams()
     const [product, setProduct] = useState({});
-
+    const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/products/${params.cdw}`)
+            .get(`${PRODUCT_SERVER_URL}/products/${params.cdw}`)
             .then((response) => {
                 setProduct(response.data);
             })

@@ -1,9 +1,11 @@
-import requests, re
+import requests, re,os
 from .prompt import CART_AGENT_INSTRUCTION
 from google.adk.agents.llm_agent import Agent
 
-CART_URL = "http://localhost:8080/cart/{}"
-PRODUCT_DETAIL_URL = "http://localhost:8080/products/{}"
+# Now read the value
+BASE_URL = os.environ.get("PRODUCT_BASE_URL")
+PRODUCT_DETAIL_URL = f"{BASE_URL}/products/{{}}"
+CART_URL = f"{BASE_URL}/cart/{{}}"
 
 def get_user_id():
     # Placeholder for user ID retrieval logic

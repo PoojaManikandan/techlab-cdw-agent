@@ -9,6 +9,7 @@ function Chatbot() {
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [chatHistory, setChatHistory] = useState([]); // For API context
+    const ADK_SERVER_URL = window.REACT_APP_ADK_SERVER_URL;
 
     // Initial welcome message
     useEffect(() => {
@@ -37,8 +38,9 @@ function Chatbot() {
             // );
 
             // if(response.status === 200) {
+            console.log('ADK_SERVER_URL:', ADK_SERVER_URL);
             if(true){
-                axios.post('http://localhost:8080/run', {
+                axios.post(`${ADK_SERVER_URL}/run`, {
                     appName: 'cdw_agent',
                     userId: 'u_125',
                     sessionId: `${SESSION_ID}`,

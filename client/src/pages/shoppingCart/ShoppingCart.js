@@ -79,10 +79,10 @@ function ShoppingCart() {
 
     const navigate = useNavigate();
     const [cartItems, setCartItems] = useState([]);
-
+    const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL
     useEffect(() => {
         axios
-            .get('http://localhost:8080/cart/1234')
+            .get(`${PRODUCT_SERVER_URL}/cart/1234`)
             .then((response) => {
                 // Map API response to flat cartItems array for rendering
                 const items = response.data.products.map(item => ({
@@ -100,7 +100,7 @@ function ShoppingCart() {
         if (newQuantity < 1) return;
         // Update quantity in backend using POST (body)
         axios
-            .post('http://localhost:8080/cart/1234', {
+            .post(`${PRODUCT_SERVER_URL}/cart/1234`, {
                 cdw: cdw,
                 quantity: newQuantity
             })

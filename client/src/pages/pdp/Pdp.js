@@ -7,10 +7,10 @@ import ProductCard from '../../components/productCard/ProductCard';
 
 function PDP() {
     const [products, setProducts] = useState([]);
-
+    const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL
     useEffect(() => {
         axios
-            .get('http://localhost:8080/products')
+            .get(`${PRODUCT_SERVER_URL}/products`)
             .then((response) => {
                 setProducts(response.data);
             })

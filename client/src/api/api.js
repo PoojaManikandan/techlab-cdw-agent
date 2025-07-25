@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL;
 // Create an Axios instance
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8080/', // Replace with your API base URL
+  baseURL: PRODUCT_SERVER_URL, // Replace with your API base URL
 });
 
 // Add a request interceptor

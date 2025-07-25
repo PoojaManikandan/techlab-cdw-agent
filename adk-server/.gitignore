@@ -1,0 +1,52 @@
+# Byte-compiled / cached / temporary files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pkl
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+# VSCode and IDE settings
+.vscode/
+.idea/
+
+# Python-specific files
+*.egg-info/
+*.eggs/
+*.log
+*.sqlite3
+
+# Test coverage
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+.cache/
+
+# Build artifacts
+build/
+dist/
+*.egg
+*.whl
+
+# MyPy and Pylint
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+pylint-report.txt
+
+# MacOS
+.DS_Store
+
+# Azure config (contains secrets)
+azure.config

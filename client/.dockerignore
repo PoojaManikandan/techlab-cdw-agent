@@ -1,0 +1,29 @@
+# dependencies
+node_modules
+
+# build artifacts
+build
+dist
+
+# git & Docker
+.git
+.gitignore
+Dockerfile
+.dockerignore
+
+# local env files
+.env
+.env.*
+
+# system
+.DS_Store
+
+# editor
+.vscode/
+.idea/
+
+# logs
+*.log
+
+# Azure config (not needed in image)
+azure.config

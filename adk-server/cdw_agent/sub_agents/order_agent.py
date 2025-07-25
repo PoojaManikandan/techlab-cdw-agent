@@ -1,15 +1,17 @@
 import email
 from itertools import product
 import requests
-import re
+import re,os
 from google.adk.agents.llm_agent import Agent
 from .prompt import ORDER_AGENT_INSTRUCTION
 import random
 from pydantic import ValidationError
 
 
-ORDER_LIST_URL = "http://localhost:8080/order"
-CART_URL = "http://localhost:8080/cart/{}"
+# Now read the value
+BASE_URL = os.environ.get("PRODUCT_BASE_URL")
+ORDER_LIST_URL = f"{BASE_URL}/order"
+CART_URL = f"{BASE_URL}/cart/{{}}"
 
 def get_user_id():
     # Placeholder for user ID retrieval logic

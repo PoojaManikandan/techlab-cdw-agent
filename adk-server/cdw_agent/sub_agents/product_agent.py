@@ -2,9 +2,12 @@ import requests
 import re
 from google.adk.agents.llm_agent import Agent
 from .prompt import PRODUCT_AGENT_INSTRUCTION
+import os
 
-PRODUCT_LIST_URL = "http://localhost:8080/products"
-PRODUCT_DETAIL_URL = "http://localhost:8080/products/{}"
+# Now read the value
+BASE_URL = os.environ.get("PRODUCT_BASE_URL")
+PRODUCT_LIST_URL = f"{BASE_URL}/products"
+PRODUCT_DETAIL_URL = f"{BASE_URL}/products/{{}}"
 
 # Helper function to fetch all products
 def fetch_all_products():

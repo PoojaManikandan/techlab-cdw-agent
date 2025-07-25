@@ -20,16 +20,18 @@ from auth import create_access_token
 from deps import get_current_user
 from passlib.context import CryptContext
 import random
-
+import os
 app = FastAPI(
     title="CDW ECommerce API",
     summary="API for managing CDW e-commerce operations"
 )
 
+frontend_origin = os.environ.get("FRONTEND_ORIGIN", "http://localhost:3000")
+
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React dev server
+    allow_origins=[frontend_origin, "*"],  # React dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -57,8 +59,6 @@ def authenticate_user(username: str, password: str):
     if not user or not pwd_context.verify(password, user["password"]):
         return False
     return user
-
-
 
 
 
