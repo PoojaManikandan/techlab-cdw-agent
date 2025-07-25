@@ -17,7 +17,7 @@ from the cart but there is a catch for the create order from cart that is
 when a order is created before the payment is confirmed, it will be marked as 
 "pending" until the payment is successful so the user need to complete payment 
 with paypal_agent.
-pass the control flow to the paypal_agent to complete the payment.
+pass the control flow to the paypal_agent to complete the payment before that make sure you get confimation from the user for payment and also make sure you return the order_agent response.
 summarize the response with appropriate info and respond.
 """
 
