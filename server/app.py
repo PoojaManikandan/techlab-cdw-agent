@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from fastapi import Query
 from typing import List
 
+from pydantic import BaseModel
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from models.products import Product, CartProduct
@@ -165,17 +166,26 @@ def create_order(order: Order):
     except Exception as e:
         print(f"Error creating order: {str(e)}")
         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
-
+class UpdateStatusRequest(BaseModel):
+    status: str
 @app.put("/order/{order_id}", response_model=Order)
-def update_order(order_id: str, order: Order):
+def update_order_status(order_id: str, request: UpdateStatusRequest):
     try:
-        order_dict = order.dict()
-        result = db.orders.update_one({"order_id": order_id}, {"$set": order_dict})
+        # Check if the order exists
+        existing_order = db.orders.find_one({"order_id": order_id})
+        if not existing_order:
+            return JSONResponse(status_code=404, content={"status": "error", "message": "Order not found"})
+        
+        # Update only the status field
+        result = db.orders.update_one({"order_id": order_id}, {"$set": {"status": request.status}})
         if result.matched_count == 0:
             return JSONResponse(status_code=404, content={"status": "error", "message": "Order not found"})
-        return Order(**order_dict)
+        
+        # Return the updated order
+        existing_order["status"] = request.status  # Update the status in the local object
+        return Order(**existing_order)
     except Exception as e:
-        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})    
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
 
 def get_paypal_access_token():
     response = requests.post(
