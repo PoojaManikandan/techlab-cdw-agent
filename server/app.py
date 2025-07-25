@@ -78,12 +78,17 @@ def check_mongo_connection():
         return {"status": "error", "message": str(e)}
     
 
+
+# /products route with optional prod_name query param
 @app.get("/products", response_model=List[Product])
-def get_products():
+def get_products(prod_name: str = Query(None, description="Product name to search for")):
     try:
-        products = []
-        for product in products_collection.find({}):
-            products.append(Product(**product))
+        query = {}
+        if prod_name:
+            # Case-insensitive search for product name
+            query = {"name": {"$regex": f"^{prod_name}$", "$options": "i"}}
+        products_from_db = list(products_collection.find(query))
+        products = [Product(**product) for product in products_from_db]
         return products
     except Exception as e:
         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
