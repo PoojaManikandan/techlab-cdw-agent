@@ -34,3 +34,11 @@ adk eval \
     eval/data/evalset0fc08a.evalset.json
 
 ---
+
+## Data pipeline for Products in CDW Site
+
+### Create vector store and vector search index
+```bash
+cd adk-server
+python products_embedding_agent/data_pipeline.py
+```

@@ -4,3 +4,8 @@ google-cloud-aiplatform
 rouge-score 
 pandas 
 tabulate 
+langchain
+langchain-mongodb
+langchain-openai
+pymongo
+python-dotenv
