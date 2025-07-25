@@ -10,6 +10,7 @@ from models.products import Product, CartProduct
 from models.cart import Cart, AddToCartRequest
 from models.order import Order
 from models.user import User
+from models.quote import Quote, AddToQuoteRequest, QuoteProduct
 
 from pydantic.functional_validators import BeforeValidator
 from typing_extensions import Annotated
@@ -134,6 +135,70 @@ def add_to_cart(user_id: str, body: AddToCartRequest):
         return cart_obj
     except Exception as e:
         return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
+    
+
+
+@app.get("/quote/{user_id}", response_model=List[Quote])
+def get_quotes(user_id: str):
+    try:
+        quotes = list(db.quotes.find({"user_id": user_id}))
+        if not quotes:
+            return JSONResponse(status_code=404, content={"status": "error", "message": "No quotes found for this user"})
+        return [Quote(**quote) for quote in quotes]
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
+    
+
+@app.get("/quote/{user_id}/{quote_id}", response_model=Quote)
+def get_quote(user_id: str, quote_id: str):
+    try:
+        quote = db.quotes.find_one({"user_id": user_id, "quote_id": quote_id})
+        if not quote:
+            return JSONResponse(status_code=404, content={"status": "error", "message": "Quote not found"})
+        return Quote(**quote)
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
+
+
+@app.post("/quote/{user_id}", response_model=Quote)
+def add_to_quote(user_id: str, body: AddToQuoteRequest):
+    try:
+        quote_products = body.products
+        quoted_price = body.quoted_price
+
+        products = []
+        total_price = 0.0
+        number_of_items = 0
+        for product in quote_products:
+            product_data = products_collection.find_one({"cdw": product.cdw})
+            if not product_data:
+                return JSONResponse(status_code=404, content={"status": "error", "message": f"Product with CDW {product.cdw} not found"})
+            
+            cart_product = CartProduct(
+                quantity=product.quantity,
+                product=Product(**product_data)
+            )
+            products.append(cart_product)
+            total_price += cart_product.quantity * float(product_data["price"])
+            number_of_items += cart_product.quantity
+            
+
+        quote_id = "quote-" + str(random.randint(1000, 9999))  # Generate a random quote ID
+        quote = Quote(
+            quote_id=quote_id,
+            user_id=user_id,
+            quoted_price=quoted_price,
+            status="pending",
+            products=products,
+            total_price=total_price,
+            number_of_items=number_of_items
+        )
+
+        db.quotes.insert_one(quote.dict())
+        return quote
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
+
 
 
 @app.get("/order", response_model=List[Order])
