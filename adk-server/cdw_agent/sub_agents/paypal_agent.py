@@ -4,10 +4,11 @@ from cdw_agent.util import get_access_token
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset, StdioServerParameters
 import requests
 import json
+import os
 
-ORDER_URL = "http://localhost:8080/order/{}"
-
-
+# Now read the value
+BASE_URL = os.environ.get("PRODUCT_BASE_URL")
+ORDER_URL = f"{BASE_URL}/order/{{}}"
 
 paypal_token = get_access_token()
 
