@@ -9,7 +9,7 @@ function Chatbot() {
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [chatHistory, setChatHistory] = useState([]); // For API context
-    const ADK_SERVER_URL = window.REACT_APP_ADK_SERVER_URL;
+    const ADK_SERVER_URL = window.REACT_APP_API_GATEWAY_URL;
 
     // Initial welcome message
     useEffect(() => {

@@ -7,7 +7,7 @@ import json
 import os
 
 # Now read the value
-BASE_URL = os.environ.get("PRODUCT_BASE_URL")
+BASE_URL = os.environ.get("API_GATEWAY_URL")
 ORDER_URL = f"{BASE_URL}/order/{{}}"
 
 paypal_token = get_access_token()

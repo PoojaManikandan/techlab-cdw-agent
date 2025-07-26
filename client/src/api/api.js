@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL;
+const REACT_APP_API_GATEWAY_URL = window.REACT_APP_API_GATEWAY_URL;
 // Create an Axios instance
 const apiClient = axios.create({
-  baseURL: PRODUCT_SERVER_URL, // Replace with your API base URL
+  baseURL: REACT_APP_API_GATEWAY_URL, // Replace with your API base URL
 });
 
 // Add a request interceptor

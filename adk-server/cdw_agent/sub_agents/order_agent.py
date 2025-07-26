@@ -9,7 +9,7 @@ from pydantic import ValidationError
 
 
 # Now read the value
-BASE_URL = os.environ.get("PRODUCT_BASE_URL")
+BASE_URL = os.environ.get("API_GATEWAY_URL")
 ORDER_LIST_URL = f"{BASE_URL}/order"
 CART_URL = f"{BASE_URL}/cart/{{}}"
 

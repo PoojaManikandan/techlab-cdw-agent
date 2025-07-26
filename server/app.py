@@ -17,17 +17,15 @@ from typing_extensions import Annotated
 import requests
 
 import config
-from auth import create_access_token
-from deps import get_current_user
 from passlib.context import CryptContext
 import random
 import os
 app = FastAPI(
-    title="CDW ECommerce API",
-    summary="API for managing CDW e-commerce operations"
+    title="ECommerce Product Server",
+    summary="API for managing e-commerce operations"
 )
 
-frontend_origin = os.environ.get("FRONTEND_ORIGIN", "http://localhost:3000")
+frontend_origin = os.environ.get("FRONTEND_ORIGIN")
 
 # Add CORS middleware
 app.add_middleware(
@@ -205,52 +203,3 @@ def capture_order(order_id: str):
         headers={"Authorization": f"Bearer {access_token}"}
     )
     return res.json()
-
-
-@app.post("/login")
-async def login(data: User):
-    user = authenticate_user(data.username, data.password)
-    if not user:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Bad credentials",
-                            headers={"WWW-Authenticate": "Bearer"})
-    token = create_access_token({"sub": user["username"]})
-    return {"access_token": token, "token_type": "bearer"}
-
-def generate_unique_4_digit_id(users_collection):
-    unique = False
-    user_id = None
-
-    while not unique:
-        user_id = random.randint(1000, 9999)
-        existing_user = users_collection.find_one({"user_id": user_id})
-        if not existing_user:
-            unique = True
-
-    return user_id
-
-@app.post("/signup")
-def signup(user: User):
-    try:
-        existing_user = users_collection.find_one({"username": user.username})
-        if existing_user:
-            raise HTTPException(status_code=400, detail="User already exists")
-
-        hashed_password = pwd_context.hash(user.password)
-
-        user_data = {
-            "user_id": str(generate_unique_4_digit_id(users_collection)),
-            "username": user.username,
-            "password": hashed_password
-        }
-
-        
-        users_collection.insert_one(user_data)
-
-        return {"status": "success", "message": "User created successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/protected")
-async def protected_route(current_user: str = Depends(get_current_user)):
-    return {"message": f"Hello, {current_user}! You’re authenticated "}
-

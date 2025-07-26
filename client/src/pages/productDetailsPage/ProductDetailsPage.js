@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function ProductDetailsPage() { 
     const params= useParams()
     const [product, setProduct] = useState({});
-    const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL
+    const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL
     useEffect(() => {
         axios
             .get(`${PRODUCT_SERVER_URL}/products/${params.cdw}`)

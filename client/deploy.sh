@@ -38,7 +38,6 @@ az containerapp create \
   --max-replicas 2 \
   --env-vars \
     REACT_APP_PAYPAL_CLIENT_ID="$REACT_APP_PAYPAL_CLIENT_ID" \
-    REACT_APP_PRODUCT_SERVER_URL="$REACT_APP_PRODUCT_SERVER_URL" \
-    REACT_APP_ADK_SERVER_URL="$REACT_APP_ADK_SERVER_URL" \
+    REACT_APP_API_GATEWAY_URL="$REACT_APP_API_GATEWAY_URL" \
 
 echo "✅ Deployment completed successfully!"

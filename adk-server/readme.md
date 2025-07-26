@@ -42,3 +42,11 @@ adk eval \
 cd adk-server
 python products_vectorstore_pipeline/data_pipeline.py
 ```
+
+### Deploy to AZURE
+```
+
+chmod +x deploy.sh 
+./deploy.sh
+
+````

@@ -3,7 +3,7 @@ from .prompt import CART_AGENT_INSTRUCTION
 from google.adk.agents.llm_agent import Agent
 
 # Now read the value
-BASE_URL = os.environ.get("PRODUCT_BASE_URL")
+BASE_URL = os.environ.get("API_GATEWAY_URL")
 PRODUCT_DETAIL_URL = f"{BASE_URL}/products/{{}}"
 CART_URL = f"{BASE_URL}/cart/{{}}"
 

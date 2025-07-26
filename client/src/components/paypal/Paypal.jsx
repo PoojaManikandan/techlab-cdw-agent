@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Paypal({ totalAmount }) {
 
   const navigate = useNavigate();
-  const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL
+  const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL
   
   return (
     <PayPalButtons

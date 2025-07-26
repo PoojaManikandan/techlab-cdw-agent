@@ -6,7 +6,7 @@ import PayPalIntegration from '../../containers/payPalIntegration/PayPalIntegrat
 function Checkout({ shipping = 10.00 }) {
     const [subtotal, setSubtotal] = useState(0);
     const orderTotal = subtotal + shipping;
-    const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL
+    const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL
     useEffect(() => {
          axios.get(`${PRODUCT_SERVER_URL}/cart/1234`)
             .then(response => {

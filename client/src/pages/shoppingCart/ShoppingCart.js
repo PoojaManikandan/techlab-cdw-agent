@@ -79,7 +79,7 @@ function ShoppingCart() {
 
     const navigate = useNavigate();
     const [cartItems, setCartItems] = useState([]);
-    const PRODUCT_SERVER_URL = window.REACT_APP_PRODUCT_SERVER_URL
+    const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL
     useEffect(() => {
         axios
             .get(`${PRODUCT_SERVER_URL}/cart/1234`)

@@ -5,7 +5,7 @@ from .prompt import PRODUCT_AGENT_INSTRUCTION
 import os
 
 # Now read the value
-BASE_URL = os.environ.get("PRODUCT_BASE_URL")
+BASE_URL = os.environ.get("API_GATEWAY_URL")
 PRODUCT_LIST_URL = f"{BASE_URL}/products"
 PRODUCT_DETAIL_URL = f"{BASE_URL}/products/{{}}"
 
