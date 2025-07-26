@@ -35,10 +35,11 @@ az containerapp create \
   --cpu "$CPU" \
   --memory "$MEMORY" \
   --min-replicas 1 \
-  --max-replicas 2 \
+  --max-replicas 1 \
   --env-vars \
-    PAYPAL_CLIENT_ID="$PAYPAL_CLIENT_ID" \
-    PAYPAL_CLIENT_SECRET="$PAYPAL_CLIENT_SECRET" \
+    ADK_SERVER_URL="$ADK_SERVER_URL" \
+    PRODUCT_SERVER_URL="$PRODUCT_SERVER_URL" \
+    ADK_APP_NAME="$ADK_APP_NAME" \
     MONGODB_URL="$MONGODB_URL" \
     FRONTEND_ORIGIN="$FRONTEND_ORIGIN"
 

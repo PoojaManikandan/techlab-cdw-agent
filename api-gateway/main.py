@@ -220,12 +220,12 @@ async def proxy_capture_paypal(order_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to capture PayPal order: {e}")
 
-@app.post("/agents/ask")
+@app.post("/run")
 async def proxy_agent_ask(request: Request):
     try:
         body = await request.json()
         async with httpx.AsyncClient() as client:
-            response = await client.post(f"{ADK_SERVER_URL}/agents/ask", json=body)
+            response = await client.post(f"{ADK_SERVER_URL}/run", json=body)
             response.raise_for_status()
             return response.json()
     except Exception as e:

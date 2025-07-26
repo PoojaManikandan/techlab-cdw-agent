@@ -5,9 +5,9 @@ import requests, re, os
 from pydantic import BaseModel
 from typing import List
 
-QUOTE_URL = os.getenv("SERVER_URL") + "/quote/{}"
-QUOTE_BY_ID_URL = os.getenv("SERVER_URL") + "/quote/{}/{}"
-PRODUCT_DETAIL_URL = os.getenv("SERVER_URL") + "/products/{}"
+QUOTE_URL = os.getenv("API_GATEWAY_URL") + "/quote/{}"
+QUOTE_BY_ID_URL = os.getenv("API_GATEWAY_URL") + "/quote/{}/{}"
+PRODUCT_DETAIL_URL = os.getenv("API_GATEWAY_URL") + "/products/{}"
 
 class QuoteProduct(BaseModel):
     cdw: str
