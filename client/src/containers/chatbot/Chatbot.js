@@ -25,10 +25,10 @@ function Chatbot() {
         setIsLoading(true);
 
         try {
-            const SESSION_ID = 's_103';
+            const SESSION_ID = 's_100';
             const requestBody = { text }; // or customize as needed
             // const response = await axios.post(
-            //     `http://localhost:8080/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
+            //     `${process.env.REACT_APP_ADK_SERVER_URL}/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
             //     {},
             //     {
             //         headers: {
@@ -68,6 +68,8 @@ function Chatbot() {
                         .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // **heading**
                         .replace(/^\* (.*)$/gm, '<li>$1</li>') // * bullet
                         .replace(/\/n/g, '<br/>'); // /n newline
+                    // Add link tag for PayPal sandbox links
+                    text = text.replace(/(https:\/\/www\.sandbox\.paypal\.com\/checkoutnow\?token=[A-Za-z0-9]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">PayPal Checkout</a>');
                     const newBotMessage = { sender: 'bot', text };
                     setMessages((prevMessages) => [...prevMessages, newBotMessage]);
                     setChatHistory((prevHistory) => [...prevHistory, { role: "model", parts: [{ text }] }]);

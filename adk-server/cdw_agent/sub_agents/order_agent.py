@@ -1,9 +1,9 @@
-import email
 from itertools import product
-import requests
-import re,os
+import requests, os, email
 from google.adk.agents.llm_agent import Agent
+from google.adk.models.lite_llm import LiteLlm
 from .prompt import ORDER_AGENT_INSTRUCTION
+from ..util import MODEL_GPT_41
 import random
 from pydantic import ValidationError
 
@@ -156,7 +156,7 @@ def create_order_from_cart_handler(query: str) -> dict:
         return {"error": f"Exception occurred: {str(e)}"}
 
 order_agent = Agent(
-    model='gemini-2.5-flash',
+    model=LiteLlm(MODEL_GPT_41),
     name='order_agent',
     instruction=ORDER_AGENT_INSTRUCTION,
     tools=[get_order_by_user_handler,get_order_by_id_handler,

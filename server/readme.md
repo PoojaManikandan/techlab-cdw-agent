@@ -1,5 +1,7 @@
 Steps to install:
 
+Use python version 3.12
+
 ```
 cd server
 pyenv local 3.12
