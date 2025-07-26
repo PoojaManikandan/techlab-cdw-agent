@@ -6,7 +6,7 @@ load_dotenv()
 from langchain_mongodb import MongoDBAtlasVectorSearch
 from pymongo import MongoClient
 
-import models
+from .models import create_text_embedding_model
 
 
 def get_vector_store():
@@ -21,7 +21,7 @@ def get_vector_store():
     client = MongoClient(os.getenv("MONGODB_ATLAS_CLUSTER_URI"))
     MONGODB_COLLECTION = client[os.getenv("MONGODB_NAME")][os.getenv("MONGODB_COLLECTION_NAME")]
     
-    embeddings = models.create_text_embedding_model()
+    embeddings = create_text_embedding_model()
 
     vector_store = MongoDBAtlasVectorSearch(
         collection=MONGODB_COLLECTION,

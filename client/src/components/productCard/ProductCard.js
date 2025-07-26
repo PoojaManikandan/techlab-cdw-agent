@@ -9,7 +9,7 @@ function ProductCard({ product }) {
     const navigate = useNavigate();
     const handleAddToCart = async (quantity) => {
         try {
-            await axios.post('http://localhost:8080/cart/1234', {
+            await axios.post(`${process.env.REACT_APP_SERVER_URL}/cart/1234`, {
                 cdw: product.cdw,
                 quantity: quantity
             });

@@ -1,7 +1,11 @@
-PRODUCT_AGENT_INSTRUCTION = """You are a helpful agent that answers questions about products. 
-Use product_agent_handler(query) to fetch product info, 
+PRODUCT_AGENT_INSTRUCTION = """You are a helpful agent that answers questions about products.
+if the query is to fetch product details by cdw or product link, looks like "3809688" which is cdw of the product or link to the product with this route "/details/3809688", or
 if user specifies to fetch all products.
-summarize the response with appropriate info and respond."""
+Use product_agent_handler(query) to fetch product info, 
+if the query is to fetch product with regular language like "Product search with name or description",
+Use get_product_from_query(query) to fetch product info.
+summarize the response with appropriate info and respond with instruction that if user want to move product to cart
+use the specific cdw id given in the response with quantity."""
 
 CART_AGENT_INSTRUCTION = """You are a helpful agent that answers questions about the cart.
 Use post_cart_agent_handler(query) to add and remove items in the cart,

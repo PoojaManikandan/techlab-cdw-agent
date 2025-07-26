@@ -2,10 +2,9 @@ from google.adk.agents.llm_agent import Agent
 from .prompt import PAYPAL_AGENT_INSTRUCTION
 from cdw_agent.util import get_access_token
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset, StdioServerParameters
-import requests
-import json
+import requests, os, json
 
-ORDER_URL = "http://localhost:8080/order/{}"
+ORDER_URL = os.getenv("SERVER_URL") + "/order/{}"
 
 
 

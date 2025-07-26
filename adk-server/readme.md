@@ -1,5 +1,11 @@
 ## ⚙️ ADK Server Setup
 
+Use python version 3.12
+
+```bash
+pyenv local 3.12
+```
+
 ### Install and Run Backend
 ```bash
 cd adk-server

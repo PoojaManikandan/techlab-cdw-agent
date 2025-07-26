@@ -1,14 +1,13 @@
 from google.adk.agents.llm_agent import Agent
 
 from .prompt import QUOTE_AGENT_INSTRUCTION
-import requests, re
+import requests, re, os
 from pydantic import BaseModel
 from typing import List
-import json
 
-QUOTE_URL = "http://localhost:8080/quote/{}"
-QUOTE_BY_ID_URL = "http://localhost:8080/quote/{}/{}"
-PRODUCT_DETAIL_URL = "http://localhost:8080/products/{}"
+QUOTE_URL = os.getenv("SERVER_URL") + "/quote/{}"
+QUOTE_BY_ID_URL = os.getenv("SERVER_URL") + "/quote/{}/{}"
+PRODUCT_DETAIL_URL = os.getenv("SERVER_URL") + "/products/{}"
 
 class QuoteProduct(BaseModel):
     cdw: str
@@ -85,13 +84,10 @@ def create_quote_handler(addToQuoteRequest: AddToQuoteRequest):
     Returns:
         dict: The JSON response from the quote API if successful, or a dictionary containing an error message.
     """
-    print("kavin: create_quote_handler called with request:", addToQuoteRequest)
     payload = {
         "products": addToQuoteRequest["products"],
         "quoted_price": addToQuoteRequest["quoted_price"]
     }
-    # print("kavin: payload for create_quote_handler:", payload)
-    # return payload
     try:
         user_id = get_user_id()
         headers = {'Content-Type': 'application/json'}
@@ -102,10 +98,8 @@ def create_quote_handler(addToQuoteRequest: AddToQuoteRequest):
         else:
             return {"error": f"Failed to create quote. Status code: {response.status_code}"}
     except Exception as e:
-        return {"error": f"Exception occurred: {str(e)}"}
-    
+        return {"error": f"Exception occurred: {str(e)}"}   
  
-
 
 quote_agent = Agent(
     name="quote_agent",

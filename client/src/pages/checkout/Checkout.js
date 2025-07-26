@@ -8,7 +8,7 @@ function Checkout({ shipping = 10.00 }) {
     const orderTotal = subtotal + shipping;
 
     useEffect(() => {
-        axios.get('http://localhost:8080/cart/1234')
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/cart/1234`)
             .then(response => {
                 setSubtotal(response.data.total_price || 0);
             })

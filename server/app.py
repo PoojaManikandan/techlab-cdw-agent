@@ -22,6 +22,7 @@ from auth import create_access_token
 from deps import get_current_user
 from passlib.context import CryptContext
 import random
+import os
 
 app = FastAPI(
     title="CDW ECommerce API",
@@ -31,7 +32,7 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React dev server
+    allow_origins=[os.getenv("REACT_SERVER_URL")],  # React dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

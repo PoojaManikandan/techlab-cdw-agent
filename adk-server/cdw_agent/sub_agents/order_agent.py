@@ -1,7 +1,5 @@
-import email
 from itertools import product
-import requests
-import re
+import requests, os, email
 from google.adk.agents.llm_agent import Agent
 from google.adk.models.lite_llm import LiteLlm
 from .prompt import ORDER_AGENT_INSTRUCTION
@@ -10,8 +8,8 @@ import random
 from pydantic import ValidationError
 
 
-ORDER_LIST_URL = "http://localhost:8080/order"
-CART_URL = "http://localhost:8080/cart/{}"
+ORDER_LIST_URL = os.getenv("SERVER_URL") + "/order"
+CART_URL = os.getenv("SERVER_URL") + "/cart/{}"
 
 def get_user_id():
     # Placeholder for user ID retrieval logic

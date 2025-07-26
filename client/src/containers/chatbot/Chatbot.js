@@ -24,10 +24,10 @@ function Chatbot() {
         setIsLoading(true);
 
         try {
-            const SESSION_ID = 's_105';
+            const SESSION_ID = 's_100';
             const requestBody = { text }; // or customize as needed
             // const response = await axios.post(
-            //     `http://localhost:8000/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
+            //     `${process.env.REACT_APP_ADK_SERVER_URL}/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
             //     {},
             //     {
             //         headers: {
@@ -38,7 +38,7 @@ function Chatbot() {
 
             // if(response.status === 200) {
             if(true){
-                axios.post('http://localhost:8000/run', {
+                axios.post(`${process.env.REACT_APP_ADK_SERVER_URL}/run`, {
                     appName: 'cdw_agent',
                     userId: 'u_125',
                     sessionId: `${SESSION_ID}`,

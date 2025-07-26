@@ -13,7 +13,7 @@ function ProductDetailsPage() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/products/${params.cdw}`)
+            .get(`${process.env.REACT_APP_SERVER_URL}/products/${params.cdw}`)
             .then((response) => {
                 setProduct(response.data);
             })

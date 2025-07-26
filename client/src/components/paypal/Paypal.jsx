@@ -25,7 +25,7 @@ export default function Paypal({ totalAmount }) {
       onApprove={async (data, actions) => {
         const details = await actions.order.capture();
         await fetch(
-          `http://localhost:8080/api/paypal/capture-order/${data.orderID}`,
+          `${process.env.REACT_APP_SERVER_URL}/api/paypal/capture-order/${data.orderID}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

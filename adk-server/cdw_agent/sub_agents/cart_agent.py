@@ -1,11 +1,11 @@
-import requests, re
+import requests, re, os
 from google.adk.models.lite_llm import LiteLlm
 from .prompt import CART_AGENT_INSTRUCTION
 from ..util import MODEL_GPT_41
 from google.adk.agents.llm_agent import Agent
 
-CART_URL = "http://localhost:8080/cart/{}"
-PRODUCT_DETAIL_URL = "http://localhost:8080/products/{}"
+CART_URL = os.getenv("SERVER_URL") + "/cart/{}"
+PRODUCT_DETAIL_URL = os.getenv("SERVER_URL") + "/products/{}"
 
 def get_user_id():
     # Placeholder for user ID retrieval logic
@@ -14,6 +14,13 @@ def get_user_id():
 
 
 def get_product_quantity(query, cdw):
+    """
+    Determines the quantity of a product based on the query string.
+    Args:
+        query (str): The input query string.
+        cdw (str): The product's CDW.
+    Returns:
+        int: The quantity of the product to add or remove from the cart."""
     query_lower = query.lower()
     if 'remove' in query_lower:
         match = re.search(r'(\d+)\s*items?', query_lower)
@@ -25,6 +32,14 @@ def get_product_quantity(query, cdw):
 
 # Helper function to fetch a single product by cdw
 def fetch_product_by_cdw(cdw):
+    """
+    Fetches product details by cdw.
+    
+    Args:        
+        cdw (str): The CDW of the product to fetch.
+    Returns:
+        dict: The product details if found, otherwise an error message.    
+    """
     try:
         response = requests.get(PRODUCT_DETAIL_URL.format(cdw))
         if response.status_code == 200:
@@ -38,6 +53,14 @@ def fetch_product_by_cdw(cdw):
 
 
 def get_product_id(query):
+     """
+     Extracts the product ID (CDW) from the query string.
+     
+     Args:
+         query (str): The input query string.
+     Returns:
+         str: The product ID (CDW) if found, otherwise an error message.
+     """
      try:
         cdw_match = re.search(r"(?:details?/)?(\d{5,})", query)
         if cdw_match:
@@ -55,6 +78,12 @@ def get_product_id(query):
 
 # Handler for adding and removing items to the cart
 def post_cart_agent_handler(query: str):
+    """
+    Adds or removes items from the user's cart based on the query.
+    Args:
+        query (str): The query string containing the product details and action (add/remove).
+    Returns:
+        dict: The updated cart details or an error message if the request fails."""
     try:
         cdw = get_product_id(query)
         if 'error' in cdw:
@@ -76,6 +105,13 @@ def post_cart_agent_handler(query: str):
 
 
 def get_cart(query: str):
+    """
+    Retrieves the user's cart details.
+    Args:
+        query (str): The query string containing the user ID or other parameters.
+    Returns:
+        dict: The cart details or an error message if the request fails.
+    """
     try:
         user_id = get_user_id()
         response = requests.get(CART_URL.format(user_id))
@@ -91,6 +127,13 @@ def get_cart(query: str):
 
 # Handler for getting the cart
 def get_cart_agent_handler(query: str):
+    """
+    Retrieves the user's cart details based on the query.
+    Args:
+        query (str): The query string containing the user ID or other parameters.
+    Returns:
+        dict: The cart details or an error message if the request fails.
+    """
     try:
         response = get_cart(query)
         return response
