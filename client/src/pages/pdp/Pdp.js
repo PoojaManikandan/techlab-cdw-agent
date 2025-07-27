@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 // import products from '../../data/product';
 import './Pdp.css';
 import ProductCard from '../../components/productCard/ProductCard';
-
+import apiClient from '../../api/api';
 
 function PDP() {
     const [products, setProducts] = useState([]);
     // const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL
     useEffect(() => {
-        axios
+        apiClient
             .get(`${window.REACT_APP_API_GATEWAY_URL}/products`)
             .then((response) => {
                 setProducts(response.data);

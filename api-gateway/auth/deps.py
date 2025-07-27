@@ -7,11 +7,12 @@ bearer_scheme = HTTPBearer()
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme)) -> str:
     token = credentials.credentials
-    username = decode_token(token)
-    if not username:
+    user_id = decode_token(token)
+    print("Decoded user_id from token:", user_id)
+    if not user_id:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired token",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return username
+    return user_id

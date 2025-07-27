@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const REACT_APP_API_GATEWAY_URL = window.REACT_APP_API_GATEWAY_URL;
 // Create an Axios instance
@@ -11,13 +13,14 @@ apiClient.interceptors.request.use(
   (config) => {
     // Retrieve the JWT token from localStorage
     const token = localStorage.getItem('jwtToken');
-    
     // If the token exists, add it to the Authorization header
     if (token) {
-        
       config.headers.Authorization = `Bearer ${token}`;
+    }else{
+      if (!window.location.href.includes('/')) {
+        window.location.href = '/login';
+      }
     }
-
     return config;
   },
   (error) => {

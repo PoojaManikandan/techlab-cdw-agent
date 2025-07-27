@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import apiClient from '../../api/api';
 import './ShoppingCart.css'; // Dedicated CSS file for this component
 import { useNavigate } from 'react-router-dom';
 
@@ -79,10 +79,11 @@ function ShoppingCart() {
 
     const navigate = useNavigate();
     const [cartItems, setCartItems] = useState([]);
+    const userId = localStorage.getItem("userId");
     // const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL
     useEffect(() => {
-        axios
-            .get(`${window.REACT_APP_API_GATEWAY_URL}/cart/1234`)
+        apiClient
+            .get(`${window.REACT_APP_API_GATEWAY_URL}/cart/${userId}`)
             .then((response) => {
                 // Map API response to flat cartItems array for rendering
                 const items = response.data.products.map(item => ({
@@ -94,13 +95,13 @@ function ShoppingCart() {
             .catch((error) => {
                 console.error('Error fetching cart:', error);
             });
-    }, []);
+    }, [userId]);
 
     const handleQuantityChange = (cdw, newQuantity) => {
         if (newQuantity < 1) return;
         // Update quantity in backend using POST (body)
-        axios
-            .post(`${window.REACT_APP_API_GATEWAY_URL}/cart/1234`, {
+        apiClient
+            .post(`${window.REACT_APP_API_GATEWAY_URL}/cart/${userId}`, {
                 cdw: cdw,
                 quantity: newQuantity
             })

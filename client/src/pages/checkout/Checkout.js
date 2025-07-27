@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import './Checkout.css'; // Dedicated CSS for this component
 import PayPalIntegration from '../../containers/payPalIntegration/PayPalIntegration';
+import apiClient from '../../api/api';
 
 function Checkout({ shipping = 10.00 }) {
     const [subtotal, setSubtotal] = useState(0);
     const orderTotal = subtotal + shipping;
     // const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL;
-
+    const userId = localStorage.getItem("userId");
     useEffect(() => {
-         axios.get(`${window.REACT_APP_API_GATEWAY_URL}/cart/1234`)
+         apiClient.get(`${window.REACT_APP_API_GATEWAY_URL}/cart/${userId}`)
             .then(response => {
                 setSubtotal(response.data.total_price || 0);
             })
             .catch(error => {
                 console.error('Error fetching cart subtotal:', error);
             });
-    }, []);
+    }, [userId]);
 
     const handleReviewOrder = () => {
         alert('Reviewing your order!');

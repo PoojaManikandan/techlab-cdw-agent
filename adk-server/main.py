@@ -34,6 +34,7 @@ async def create_session(data: SessionRequest):
         app_name=data.app_name,
         user_id=data.user_id,
     )
+    print(f"Session created: {session.id} for user {session.user_id} in app {session.app_name}")
     return {
         "session_id": session.id,
         "app_name": session.app_name,

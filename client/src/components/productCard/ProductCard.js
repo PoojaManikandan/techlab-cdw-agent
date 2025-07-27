@@ -1,22 +1,29 @@
-import React from 'react';
-import axios from 'axios';
 import ProductDetails from '../productDetails/ProductDetails';
 import ProductActions from '../productActions/ProductAction';
 import ProductImage from '../productImage/ProductImage';
 import { useNavigate } from 'react-router-dom';
+import apiClient from '../../api/api';
 
 function ProductCard({ product }) {
     const navigate = useNavigate();
-    const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL
+    const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL;
+    const userId = localStorage.getItem("userId");
     const handleAddToCart = async (quantity) => {
-        try {
-            await axios.post(`${PRODUCT_SERVER_URL}/cart/1234`, {
-                cdw: product.cdw,
-                quantity: quantity
-            });
-            navigate('/cart'); // Navigate to the cart page after adding
-        } catch (error) {
-            console.error('Error adding to cart:', error);
+
+        if (userId === null || userId === undefined )
+        {
+             navigate('/login')
+        } else{
+            try {
+                await apiClient.post(`${PRODUCT_SERVER_URL}/cart/${userId}`, {
+                    cdw: product.cdw,
+                    quantity: quantity
+                });
+                navigate('/cart');
+                // Navigate to the cart page after adding
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+            }
         }
     };
 

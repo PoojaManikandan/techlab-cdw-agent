@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router';
-
 import './ProductDetailsPage.css';
 import Button from '../../components/button/Button';
 import ProductImage from '../../components/productImage/ProductImage';
 import { useNavigate } from 'react-router-dom';
+import apiClient from '../../api/api';
 
 function ProductDetailsPage() { 
     const params= useParams()
     const [product, setProduct] = useState({});
     // const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL
     useEffect(() => {
-        axios
+       apiClient
             .get(`${window.REACT_APP_API_GATEWAY_URL}/products/${params.cdw}`)
             .then((response) => {
                 setProduct(response.data);
@@ -21,7 +20,7 @@ function ProductDetailsPage() {
                 console.error('Error fetching product:', error);
                 setProduct({});
             });
-    }, []);
+    }, [params.cdw]);
 
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();

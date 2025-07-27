@@ -17,7 +17,12 @@ const Login = () => {
         password
       });
       console.log("Login response:", res.data);
+
       localStorage.setItem('jwtToken', res.data.access_token);
+      localStorage.setItem('sessionId', res.data.session_id);
+      localStorage.setItem('adkAppName', res.data.adk_app_name);
+      localStorage.setItem('userId', res.data.user_id);
+      
       navigate('/');
     } catch (error) {
       console.error("Login error:", error);

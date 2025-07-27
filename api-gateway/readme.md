@@ -12,7 +12,7 @@ pip3 install -r requirements.txt
 Steps to run:
 
 ```
-uvicorn app:app --reload --port 8080
+uvicorn main:app --reload --port 8011
 ```
 ### Deploy to AZURE
 ```

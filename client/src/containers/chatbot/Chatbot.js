@@ -25,7 +25,9 @@ function Chatbot() {
         setIsLoading(true);
 
         try {
-            const SESSION_ID = 's_100';
+            const SESSION_ID = localStorage.getItem("sessionId");
+            const ADK_APP_NAME = localStorage.getItem("adkAppName");
+            const userId = localStorage.getItem("userId");
             const requestBody = { text }; // or customize as needed
             // const response = await axios.post(
             //     `${process.env.REACT_APP_ADK_SERVER_URL}/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
@@ -41,8 +43,8 @@ function Chatbot() {
             console.log('ADK_SERVER_URL:', ADK_SERVER_URL);
             if(true){
                 axios.post(`${ADK_SERVER_URL}/run`, {
-                    appName: 'cdw_agent',
-                    userId: 'u_125',
+                    appName: ADK_APP_NAME,
+                    userId: userId,
                     sessionId: `${SESSION_ID}`,
                     newMessage: {
                         role: 'user',

@@ -90,7 +90,6 @@ def signup(user: User):
 @app.post("/login")
 async def login(user: User, request: Request):
     try:
-        print(f"Attempting login for user: {user.username}")
         auth_user = authenticate_user(user.username, user.password)
         if not auth_user:
             raise HTTPException(
@@ -98,14 +97,15 @@ async def login(user: User, request: Request):
                 detail="Invalid credentials",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-
-        token = create_access_token({"sub": user.username})
+        
+        user_id = auth_user["user_id"]
+        token = create_access_token({"sub":  user_id})
 
         # Call ADK service to create a session
         async with httpx.AsyncClient() as client:
             adk_res = await client.post(
                 f"{ADK_SERVER_URL}/create-session",
-                json={"user_id": user.username, "app_name": ADK_APP_NAME},
+                json={"user_id": user_id, "app_name": ADK_APP_NAME},
             )
             adk_res.raise_for_status()
             adk_session = adk_res.json()
@@ -114,7 +114,8 @@ async def login(user: User, request: Request):
             "access_token": token,
             "token_type": "bearer",
             "session_id": adk_session["session_id"],
-            "adk_app_name": adk_session["app_name"]
+            "adk_app_name": adk_session["app_name"],
+            "user_id": user_id
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Login failed: {e}")
@@ -154,6 +155,7 @@ async def proxy_products():
 @app.get("/cart/{user_id}")
 async def proxy_get_cart(user_id: str, current_user: str = Depends(get_current_user)):
     if current_user != user_id:
+        print(f"Current user: {current_user}, Requested user: {user_id}")
         raise HTTPException(status_code=403, detail="Forbidden")
     try:
         async with httpx.AsyncClient() as client:
@@ -166,6 +168,7 @@ async def proxy_get_cart(user_id: str, current_user: str = Depends(get_current_u
 @app.post("/cart/{user_id}")
 async def proxy_add_to_cart(user_id: str, request: Request, current_user: str = Depends(get_current_user)):
     if current_user != user_id:
+        print(f"Current user: {current_user}, Requested user: {user_id}")
         raise HTTPException(status_code=403, detail="Forbidden")
     try:
         body = await request.json()
@@ -224,6 +227,7 @@ async def proxy_capture_paypal(order_id: str):
 async def proxy_agent_ask(request: Request):
     try:
         body = await request.json()
+        print(body)
         async with httpx.AsyncClient() as client:
             response = await client.post(f"{ADK_SERVER_URL}/run", json=body)
             response.raise_for_status()

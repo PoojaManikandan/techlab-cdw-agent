@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import './App.css';
@@ -8,39 +8,69 @@ import ProductDetailsPage from './pages/productDetailsPage/ProductDetailsPage';
 import ShoppingCart from './pages/shoppingCart/ShoppingCart';
 import Checkout from './pages/checkout/Checkout';
 import OrderConfirmation from './pages/orderConfirmation/OrderConfirmation';
-import AiChatbot from './containers/aiChatbot/AiChatbot';
+// import AiChatbot from './containers/aiChatbot/AiChatbot';
 import AiModeToggle from './containers/aiModeToggle/AiModeToggle';
 import Login from './components/login/Login';
-import apiClient from './api/api';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 const App = () => {
   const [isNormalMode, setIsNormalMode] = useState(false);
-  useEffect(()=>{
-    (async () => {
-      try {
-        const res=await apiClient.get("/protected");
-      console.log(res,"res");
-      } catch (error) {
-        console.error("Error fetching protected resource:", error);
-        
-      }
-      
-    })();
-  },[]);
+
   return (
     <Router>
-      {isNormalMode?<AiModeToggle isNormalMode={isNormalMode} setIsNormalMode={setIsNormalMode} /> :<>
-      <Header logo="/path/to/logo.png" isNormalMode={isNormalMode} setIsNormalMode={setIsNormalMode} />
-      <Routes>
-        <Route path="/" element={<PDP />} />
-        <Route path="/details/:cdw" element={<ProductDetailsPage />} />
-        <Route path="/cart" element={<ShoppingCart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/orderConfirmation" element={<OrderConfirmation />} />
-        <Route path="/login" element={<Login />} />
-        {/* Add more routes as needed */}
-      </Routes>
-      <Chatbot /></>}
+      {isNormalMode ? (
+        <AiModeToggle isNormalMode={isNormalMode} setIsNormalMode={setIsNormalMode} />
+      ) : (
+        <>
+          <Header logo="/path/to/logo.png" isNormalMode={isNormalMode} setIsNormalMode={setIsNormalMode} />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            
+            {/* Protected Routes */}
+            <Route
+              path="/"
+              element={
+                // <ProtectedRoute>
+                  <PDP />
+                // </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/details/:cdw"
+              element={
+                <ProtectedRoute>
+                  <ProductDetailsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cart"
+              element={
+                <ProtectedRoute>
+                  <ShoppingCart />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/checkout"
+              element={
+                <ProtectedRoute>
+                  <Checkout />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/orderConfirmation"
+              element={
+                <ProtectedRoute>
+                  <OrderConfirmation />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+          <Chatbot />
+        </>
+      )}
     </Router>
   );
 };
