@@ -1,16 +1,16 @@
 from google.adk.agents.llm_agent import Agent
 from .prompt import PAYPAL_AGENT_INSTRUCTION
-from cdw_agent.util import get_access_token
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset, StdioServerParameters
-import requests
-import json
-import os
+import requests, os, json
+from cdw_agent.util import PayPalTokenManager
 
-# Now read the value
-BASE_URL = os.environ.get("SERVER_URL")
-ORDER_URL = f"{BASE_URL}/order/{{}}"
+CLIENT_ID= os.getenv("PAYPAL_CLIENT_ID")
+CLIENT_SECRET= os.getenv("PAYPAL_SECRET")
+ORDER_URL = os.getenv("SERVER_URL") + "/order/{}"
 
-paypal_token = get_access_token()
+
+paypal_manager = PayPalTokenManager(CLIENT_ID, CLIENT_SECRET)
+token = paypal_manager.get_token()
 
 
 def order_status_update_handler(order_id:str,payment_order_status:str):
@@ -41,13 +41,11 @@ paypal_agent = Agent(
                     "-y",
                     "@paypal/mcp",
                     "--tools=orders.create,orders.get,orders.capture",
-                    f"--access-token={paypal_token}",
+                    f"--access-token={token}",
                 ],
             ),
             tool_filter=["create_order", "get_order", "pay_order"],
         ),
         order_status_update_handler
     ]
-)
-
- 
+) 

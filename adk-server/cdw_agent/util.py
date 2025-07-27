@@ -7,6 +7,7 @@ import os
 import requests
 
 from google.adk.agents.callback_context import CallbackContext
+import time
 
 MODEL_GPT_41 = os.getenv("MODEL_GPT_41", "azure/gpt-4.1")
 
@@ -75,33 +76,38 @@ def parse_tools_decl(tools: list):
         print("AFTER", tool.mcp_tool.inputSchema)   
     return tools 
 
+TOKEN_URL = "https://api-m.sandbox.paypal.com/v1/oauth2/token"
+class PayPalTokenManager:
+    def __init__(self, client_id, client_secret):
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.access_token = None
+        self.token_expiry = 0  # Unix timestamp when token expires
 
-def get_access_token():
-    base_url = "https://api-m.sandbox.paypal.com"
-    token_url = f"{base_url}/v1/oauth2/token"
-    try:
-        client_id = os.getenv("PAYPAL_CLIENT_ID")
-        secret = os.getenv("PAYPAL_SECRET")        
-        response = requests.post(
-            token_url,
-            headers={"Accept": "application/json"},
-            data={"grant_type": "client_credentials"},
-            auth=(client_id, secret)
-        )
-        response.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        raise RuntimeError("Failed to obtain access token from PayPal") from e
-        
-    print("PayPal Response Headers: %s", json.dumps(dict(response.headers), indent=2))
-
-    token_data = response.json()
-    if "access_token" not in token_data:
-        raise ValueError("Access token not found in PayPal response")
-
-    expires = int(token_data["expires_in"]) / 3600
-    print(f"\nToken expires in {expires:.2f} hours.\n")
-
-    return token_data["access_token"]
+    def get_token(self):
+        """Obtain a new token if expired or not yet acquired."""
+        if self.access_token is None or time.time() >= self.token_expiry:
+            response = requests.post(
+                TOKEN_URL,
+                headers={
+                    "Accept": "application/json",
+                    "Accept-Language": "en_US"
+                },
+                data={"grant_type": "client_credentials"},
+                auth=(self.client_id, self.client_secret)
+            )
+            if response.ok:
+                data = response.json()
+                self.access_token = data['access_token']
+                expires_in = int(data['expires_in'])  # typically seconds
+                self.token_expiry = time.time() + expires_in - 3600  # refresh 1 hour early
+                print("PayPal Response Headers: %s", json.dumps(dict(response.headers), indent=2))
+                expires = int(data["expires_in"]) / 3600
+                print(f"\nToken expires in {expires:.2f} hours.\n")
+                print(time.time() , self.token_expiry)
+            else:
+                raise Exception(f"Failed to get token: {response.text}")
+        return self.access_token
     
 
 def load_user_profile(callback_context: CallbackContext):

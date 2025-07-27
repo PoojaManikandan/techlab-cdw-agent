@@ -1,12 +1,13 @@
 import os
 import httpx
 import random
+import requests
 from fastapi import FastAPI, Depends, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from passlib.context import CryptContext
-from models.user import User,LogoutRequest
+from models.user import User,LogoutRequest, AgentRequest
 from auth.auth import create_access_token
 from auth.deps import get_current_user
 from dotenv import load_dotenv
@@ -221,13 +222,14 @@ async def proxy_capture_paypal(order_id: str):
         raise HTTPException(status_code=500, detail=f"Failed to capture PayPal order: {e}")
 
 @app.post("/run")
-async def proxy_agent_ask(request: Request):
+def proxy_agent_ask(body: AgentRequest):
     try:
-        body = await request.json()
-        print(body)
-        async with httpx.AsyncClient() as client:
-            response = await client.post(f"{ADK_SERVER_URL}/run", json=body)
-            response.raise_for_status()
-            return response.json()
+        # print(body)
+        # Convert Pydantic model to dict for JSON body
+        payload = body.model_dump()
+        print(f"Payload for agent request: {payload}")
+        response = requests.post(f"{ADK_SERVER_URL}/run", json=payload)
+        response.raise_for_status()
+        return response.json()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Agent request failed: {e}")
