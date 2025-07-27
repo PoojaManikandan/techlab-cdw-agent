@@ -24,7 +24,7 @@ def get_user_id():
     # This function should return the user ID based on the session or context
     return "1234"
 
-def get_quote_handler(query: str):
+def get_quote_handler(query: str,user_id:str):
     """
     Retrieves quote information for a user based on the provided query string.
 
@@ -35,7 +35,7 @@ def get_quote_handler(query: str):
 
     Args:
         query (str): The input query string, which may contain a quote ID to look up.
-
+        user_id (str): The ID of the user for whom the quote is being fetched.
     Returns:
         dict: The JSON response from the quote API if successful, or a dictionary containing an error message.
 
@@ -52,7 +52,7 @@ def get_quote_handler(query: str):
         [ ...list of quotes... ]
     """
     try:
-        user_id = get_user_id()
+
         match = re.search(r"quote-(\d+)", query, re.IGNORECASE)
         if match:
             quote_id = match.group(0)
@@ -70,7 +70,7 @@ def get_quote_handler(query: str):
         return {"error": f"Exception occurred: {str(e)}"}
 
 
-def create_quote_handler(addToQuoteRequest: AddToQuoteRequest):
+def create_quote_handler(addToQuoteRequest: AddToQuoteRequest,user_id: str):
     """
     Creates a quote for the products specified in the request.
 
@@ -80,6 +80,7 @@ def create_quote_handler(addToQuoteRequest: AddToQuoteRequest):
 
     Args:
         addToQuoteRequest (dict or AddToQuoteRequest): The request containing products and quoted price.
+        user_id (str): The ID of the user for whom the quote is being created.
 
     Returns:
         dict: The JSON response from the quote API if successful, or a dictionary containing an error message.
@@ -89,7 +90,6 @@ def create_quote_handler(addToQuoteRequest: AddToQuoteRequest):
         "quoted_price": addToQuoteRequest["quoted_price"]
     }
     try:
-        user_id = get_user_id()
         headers = {'Content-Type': 'application/json'}
         response = requests.post(QUOTE_URL.format(user_id), json=payload, headers=headers)
 

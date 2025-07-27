@@ -274,3 +274,15 @@ def capture_order(order_id: str):
         headers={"Authorization": f"Bearer {access_token}"}
     )
     return res.json()
+
+@app.get("/user/{user_id}")
+def get_user(user_id: str):
+    try:
+        user_data = users_collection.find_one({"user_id": user_id})
+
+        return {"username": user_data["username"],
+                "user_email": user_data["user_email"]}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

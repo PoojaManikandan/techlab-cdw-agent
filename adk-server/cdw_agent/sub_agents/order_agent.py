@@ -12,19 +12,24 @@ from pydantic import ValidationError
 BASE_URL = os.environ.get("SERVER_URL")
 ORDER_LIST_URL = f"{BASE_URL}/order"
 CART_URL = f"{BASE_URL}/cart/{{}}"
+USER_URL= f"{BASE_URL}/user/{{}}"
 
 def get_user_id():
     # Placeholder for user ID retrieval logic
     # This function should return the user ID based on the session or context
     return "1234"
-def get_user_name():
-    # Placeholder for user name retrieval logic
-    # This function should return the user name based on the session or context
-    return "Pooja"
-def get_user_email():
-    # Placeholder for user email retrieval logic
-    # This function should return the user email based on the session or context
-    return "pooja@example.com"
+def get_user_name(user_id: str):
+
+    response = requests.get(USER_URL.format(user_id))
+    if response.status_code == 200:
+        return response.json().get("username")
+    return None
+def get_user_email(user_id: str):
+
+    response = requests.get(USER_URL.format(user_id))
+    if response.status_code == 200:
+        return response.json().get("user_email")
+    return None
 
 def get_order_by_user_handler(user_id: str):
     """
@@ -58,9 +63,8 @@ def get_order_by_id_handler(order_id: str):
         return response.json()
     return None
 
-def get_cart(query: str):
+def get_cart(query: str,user_id: str):
     try:
-        user_id = get_user_id()
         response = requests.get(CART_URL.format(user_id))
         if response.status_code == 200:
             return response.json()
@@ -84,24 +88,23 @@ def generate_unique_5_digit_id():
     return user_id
 
 
-def create_order_from_cart_handler(query: str) -> dict:
+def create_order_from_cart_handler(query: str,user_id: str) -> dict:
     """
     Create an order from the user's cart.
 
     Args:
         query (str): The query string containing the user ID or other parameters but this is for overwriting the user ID by default this is not required.
-
+        user_id (str): The user ID for which to create the order it will be in the payload.
     Returns:
         dict: A dictionary containing the order details or an exception message.
     """
     try:
-        cart = get_cart(query)
+        cart = get_cart(query,user_id)
         if 'error' in cart:
             return cart
 
-        user_id = get_user_id()
-        name = get_user_name()
-        email_id = get_user_email()
+        name = get_user_name(user_id)
+        email_id = get_user_email(user_id)
         products = cart.get("products", [])
 
         number_of_items = 0

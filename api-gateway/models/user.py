@@ -4,6 +4,10 @@ from typing import List
 class User(BaseModel):
     username: str
     password: str
+class UserSignup(BaseModel):
+    username: str
+    user_email: str
+    password: str
 
 class LogoutRequest(BaseModel):
     user_id: str

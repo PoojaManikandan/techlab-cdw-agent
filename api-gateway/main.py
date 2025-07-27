@@ -1,3 +1,4 @@
+import json
 import os
 import httpx
 import random
@@ -7,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from passlib.context import CryptContext
-from models.user import User,LogoutRequest, AgentRequest
+from models.user import User,LogoutRequest, AgentRequest, UserSignup
 from auth.auth import create_access_token
 from auth.deps import get_current_user
 from dotenv import load_dotenv
@@ -72,7 +73,7 @@ def health():
     return {"status": "ok"}
 
 @app.post("/signup")
-def signup(user: User):
+def signup(user: UserSignup):
     try:
         if users_collection.find_one({"username": user.username}):
             raise HTTPException(status_code=400, detail="User already exists")
@@ -80,6 +81,7 @@ def signup(user: User):
         user_data = {
             "user_id": generate_unique_4_digit_id(),
             "username": user.username,
+            "user_email": user.user_email,
             "password": pwd_context.hash(user.password),
         }
 
@@ -222,12 +224,17 @@ async def proxy_capture_paypal(order_id: str):
         raise HTTPException(status_code=500, detail=f"Failed to capture PayPal order: {e}")
 
 @app.post("/run")
-def proxy_agent_ask(body: AgentRequest):
+def proxy_agent_ask(body: AgentRequest, current_user: str = Depends(get_current_user)):
     try:
-        # print(body)
         # Convert Pydantic model to dict for JSON body
         payload = body.model_dump()
-        print(f"Payload for agent request: {payload}")
+        # print("payload:", payload.get('newMessage', {}).get("parts", []))
+
+        for part in payload.get('newMessage', {}).get("parts", []):
+            print("Original part:", json.loads(part["text"])["text"])
+            part["text"] = json.dumps({ "text": json.loads(part["text"])["text"] + f" user_id: {current_user}" })
+        print("payload:", payload )
+    
         response = requests.post(f"{ADK_SERVER_URL}/run", json=payload)
         response.raise_for_status()
         return response.json()

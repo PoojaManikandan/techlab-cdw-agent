@@ -79,11 +79,12 @@ def get_product_id(query):
 
 
 # Handler for adding and removing items to the cart
-def post_cart_agent_handler(query: str):
+def post_cart_agent_handler(query: str,user_id: str):
     """
     Adds or removes items from the user's cart based on the query.
     Args:
         query (str): The query string containing the product details and action (add/remove).
+        user_id (str): The user ID for which to retrieve the cart.
     Returns:
         dict: The updated cart details or an error message if the request fails."""
     try:
@@ -95,18 +96,18 @@ def post_cart_agent_handler(query: str):
             "quantity": get_product_quantity(query, cdw)
         }
         # Assuming query contains product details to add to the cart
-        response = requests.post(CART_URL.format(get_user_id()), json=payload)
+        response = requests.post(CART_URL.format(user_id), json=payload)
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 404:
-            return {"error": "Cart not found for user ID: {}".format(get_user_id())}
+            return {"error": "Cart not found for user ID: {}".format(user_id)}
         else:
             return {"error": f"Failed to update cart. Status code: {response.status_code}"}
     except Exception as e:
         return {"error": f"Exception occurred: {str(e)}"}
 
 
-def get_cart(query: str):
+def get_cart(query: str,user_id: str):
     """
     Retrieves the user's cart details.
     Args:
@@ -115,7 +116,6 @@ def get_cart(query: str):
         dict: The cart details or an error message if the request fails.
     """
     try:
-        user_id = get_user_id()
         response = requests.get(CART_URL.format(user_id))
         if response.status_code == 200:
             return response.json()
@@ -128,16 +128,17 @@ def get_cart(query: str):
 
 
 # Handler for getting the cart
-def get_cart_agent_handler(query: str):
+def get_cart_agent_handler(query: str,user_id: str):
     """
     Retrieves the user's cart details based on the query.
     Args:
         query (str): The query string containing the user ID or other parameters.
+        user_id (str): The user ID for which to retrieve the cart.
     Returns:
         dict: The cart details or an error message if the request fails.
     """
     try:
-        response = get_cart(query)
+        response = get_cart(query,user_id)
         return response
     except Exception as e:
         return {"error": f"Exception occurred: {str(e)}"}
