@@ -6,7 +6,7 @@ from google.adk.cli.fast_api import get_fast_api_app
 from pydantic import BaseModel
 from google.adk.sessions import InMemorySessionService
 
-session_service = InMemorySessionService()
+# session_service = InMemorySessionService()
 
 class SessionRequest(BaseModel):
     app_name: str
@@ -28,30 +28,30 @@ app: FastAPI = get_fast_api_app(
     web=SERVE_WEB_INTERFACE,
 )
 
-@app.post("/create-session")
-async def create_session(data: SessionRequest):
-    session = await session_service.create_session(
-        app_name=data.app_name,
-        user_id=data.user_id,
-    )
-    print(f"Session created: {session.id} for user {session.user_id} in app {session.app_name}")
-    return {
-        "session_id": session.id,
-        "app_name": session.app_name,
-        "user_id": session.user_id
-    }
+# @app.post("/create-session")
+# async def create_session(data: SessionRequest):
+#     session = await session_service.create_session(
+#         app_name=data.app_name,
+#         user_id=data.user_id,
+#     )
+#     print(f"Session created: {session.id} for user {session.user_id} in app {session.app_name}")
+#     return {
+#         "session_id": session.id,
+#         "app_name": session.app_name,
+#         "user_id": session.user_id
+#     }
 
-@app.post("/delete-session")
-async def delete_session(
-    data: SessionRequest,
-    session_id: str = Query(..., description="Session ID to delete")
-):
-    await session_service.delete_session(
-        app_name=data.app_name,
-        user_id=data.user_id,
-        session_id=session_id
-    )
-    return {"status": "deleted", "session_id": session_id}
+# @app.post("/delete-session")
+# async def delete_session(
+#     data: SessionRequest,
+#     session_id: str = Query(..., description="Session ID to delete")
+# ):
+#     await session_service.delete_session(
+#         app_name=data.app_name,
+#         user_id=data.user_id,
+#         session_id=session_id
+#     )
+#     return {"status": "deleted", "session_id": session_id}
 
 if __name__ == "__main__":
     # Use the PORT environment variable provided by Cloud Run, defaulting to 8080

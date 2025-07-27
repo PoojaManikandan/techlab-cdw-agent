@@ -19,9 +19,12 @@ adk run <folder_name>
 ```
 
 ### Run API Server Only
+**Local testing with ADK alone**
 ```bash
 adk api_server --allow_origins http://localhost:3000
 ```
+
+**Local testing with gateway**
 ```
 uvicorn main:app --reload --port 8000
 

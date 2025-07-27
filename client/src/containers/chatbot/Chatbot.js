@@ -3,6 +3,7 @@ import './Chatbot.css'; // Import the main chatbot CSS
 import ChatWindow from '../../components/chatWindow/ChatWindow';
 import ChatBubble from '../../components/chatBubble/ChatBubble';
 import axios from 'axios';
+import apiClient from '../../api/api';
 
 function Chatbot() {
     const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +43,7 @@ function Chatbot() {
             // if(response.status === 200) {
             console.log('ADK_SERVER_URL:', ADK_SERVER_URL);
             if(true){
-                axios.post(`${ADK_SERVER_URL}/run`, {
+                apiClient.post(`${ADK_SERVER_URL}/run`, {
                     appName: ADK_APP_NAME,
                     userId: userId,
                     sessionId: `${SESSION_ID}`,

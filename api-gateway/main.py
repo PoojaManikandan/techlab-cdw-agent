@@ -104,8 +104,7 @@ async def login(user: User, request: Request):
         # Call ADK service to create a session
         async with httpx.AsyncClient() as client:
             adk_res = await client.post(
-                f"{ADK_SERVER_URL}/create-session",
-                json={"user_id": user_id, "app_name": ADK_APP_NAME},
+                f"{ADK_SERVER_URL}/apps/{ADK_APP_NAME}/users/{user_id}/sessions",
             )
             adk_res.raise_for_status()
             adk_session = adk_res.json()
@@ -113,8 +112,8 @@ async def login(user: User, request: Request):
         return {
             "access_token": token,
             "token_type": "bearer",
-            "session_id": adk_session["session_id"],
-            "adk_app_name": adk_session["app_name"],
+            "session_id": adk_session["id"],
+            "adk_app_name": adk_session["appName"],
             "user_id": user_id
         }
     except Exception as e:
@@ -124,10 +123,8 @@ async def login(user: User, request: Request):
 async def logout(request: Request, payload: LogoutRequest):
     try:
         async with httpx.AsyncClient() as client:
-            res = await client.post(
-                f"{ADK_SERVER_URL}/delete-session",
-                params={"session_id": payload.session_id},
-                json={"user_id": payload.user_id, "app_name": ADK_APP_NAME},
+            res = await client.delete(
+                f"{ADK_SERVER_URL}/apps/{ADK_APP_NAME}/users/{payload.user_id}/sessions/{payload.session_id}",
             )
             res.raise_for_status()
         return {"status": "logged out"}
