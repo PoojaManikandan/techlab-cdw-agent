@@ -1,21 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bell, User, ShoppingCart } from 'lucide-react';
 import './Header.css'; // Import the CSS file
 import logo from '../images/logo.png'; // Adjust the path as necessary
 import { useNavigate } from 'react-router-dom';
 import chatbotlogo from '../images/chatbotlogo.png'; 
 import { useLocation } from 'react-router-dom';
+import apiClient from '../api/api';
 
 function Header({isNormalMode, setIsNormalMode}) {
   const location = useLocation();
   const navigate = useNavigate();
+  const user = localStorage.getItem("jwtToken");
 
+  
   const toggleMode = () => {
     setIsNormalMode(!isNormalMode);
   };
 
   const currentPage = location.pathname;
-
+  const handleLogout = async () => {
+    await apiClient.post('/logout',{
+        user_id: localStorage.getItem('userId'),
+        session_id: localStorage.getItem('sessionId')
+    }).then(()=>{
+       localStorage.clear();
+       navigate('/login');
+    }).catch((error) => {
+        console.error("Logout error:", error);
+    });
+  };
+  
+  
   
   return (
     (currentPage!=="/login")&&<header className="w-full">
@@ -42,7 +57,7 @@ function Header({isNormalMode, setIsNormalMode}) {
             </div>
             <div className="icon-item">
               <User className="w-5 h-5" />
-              <span>Sign In</span>
+              {user ? <span onClick={handleLogout}>Logout</span> : <span onClick={() => navigate('/login')}>Sign In</span>}
             </div>
             <div className="icon-item" onClick={() => navigate('/cart')}>
               <ShoppingCart className="w-5 h-5" />
