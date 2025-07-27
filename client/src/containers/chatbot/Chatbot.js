@@ -20,6 +20,14 @@ function Chatbot() {
     }, []);
 
     const handleSendMessage = async (text) => {
+        const jwtToken = localStorage.getItem('jwtToken');
+        if (!jwtToken) {
+            setMessages((prevMessages) => [
+                        ...prevMessages,
+                        { sender: 'bot', text: 'Try logging in first and try to chat again' }
+            ]);
+            return; // Stop further processing
+        }
         const newUserMessage = { sender: 'user', text: text };
         setMessages((prevMessages) => [...prevMessages, newUserMessage]);
         setChatHistory((prevHistory) => [...prevHistory, { role: "user", parts: [{ text: text }] }]);
