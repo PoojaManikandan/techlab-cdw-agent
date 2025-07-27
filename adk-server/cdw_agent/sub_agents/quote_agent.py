@@ -22,7 +22,7 @@ class AddToQuoteRequest(BaseModel):
 def get_user_id():
     # Placeholder for user ID retrieval logic
     # This function should return the user ID based on the session or context
-    return "1234"
+    return "2147"
 
 def get_quote_handler(query: str,user_id:str):
     """

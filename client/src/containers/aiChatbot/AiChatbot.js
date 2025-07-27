@@ -26,8 +26,13 @@ function AiChatbot() {
 
             // Simulate AI response with a delay
             setTimeout(() => {
-                const aiResponseContent = getAiResponse(userMessageText);
-                setMessages(prevMessages => [...prevMessages, { type: aiResponseContent.type, content: aiResponseContent.content, sender: 'ai' }]);
+                // const aiResponseContent = getAiResponse(userMessageText);
+                // const aiResponseContent = "This is a simulated AI response. You can replace this with actual API calls.";
+                // setMessages(prevMessages => [...prevMessages, { type: aiResponseContent.type, content: aiResponseContent.content, sender: 'ai' }]);
+                setMessages(prevMessages => [
+                    ...prevMessages,
+                    { type: 'text', text: "This feature is in development, try after sometime...", sender: 'ai' }
+                ]);
             }, 1000);
         }
     };
@@ -89,6 +94,11 @@ function AiChatbot() {
 
             }
 
+        } else {
+            return {
+                type: 'text',
+                text: "I'm not sure about that. Can you ask something else?"
+            };
         }
     };
 

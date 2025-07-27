@@ -3,12 +3,14 @@ import os
 import httpx
 import random
 import requests
-from fastapi import FastAPI, Depends, HTTPException, Request, status
+from fastapi import FastAPI, Depends, HTTPException, Request, status, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from passlib.context import CryptContext
 from models.user import User,LogoutRequest, AgentRequest, UserSignup
+from typing import List
+from fastapi.responses import JSONResponse
 from auth.auth import create_access_token
 from auth.deps import get_current_user
 from dotenv import load_dotenv
@@ -138,19 +140,16 @@ async def logout(request: Request, payload: LogoutRequest):
 def protected(current_user: str = Depends(get_current_user)):
     return {"message": f"Hello {current_user}, you're authenticated!"}
 
+@app.get("/authUser", response_model=User)
+def get_authenticated_user(current_user: User = Depends(get_current_user)):
+    """
+    Returns the authenticated user's information.
+    """
+    return current_user
+
 # ==========================
 # Proxy Routes
 # ==========================
-
-@app.get("/products")
-async def proxy_products():
-    try:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(f"{PRODUCT_SERVER_URL}/products")
-            response.raise_for_status()
-            return response.json()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch products: {e}")
 
 @app.get("/cart/{user_id}")
 async def proxy_get_cart(user_id: str, current_user: str = Depends(get_current_user)):
@@ -240,3 +239,29 @@ def proxy_agent_ask(body: AgentRequest, current_user: str = Depends(get_current_
         return response.json()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Agent request failed: {e}")
+
+@app.get("/products")
+def proxy_get_products(prod_name: str = Query(None, description="Product name to search for")):
+    try:
+        params = {}
+        if prod_name:
+            params['prod_name'] = prod_name
+        response = requests.get(f"{PRODUCT_SERVER_URL}/products", params=params)
+        response.raise_for_status()
+        products = response.json()
+        return products
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})
+
+@app.get("/products/{cdw}")
+def proxy_get_product_by_cdw(cdw: str):
+    try:
+        response = requests.get(f"{PRODUCT_SERVER_URL}/products/{cdw}")
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 404:
+            return JSONResponse(status_code=404, content={"status": "error", "message": "Product not found"})
+        else:
+            return JSONResponse(status_code=response.status_code, content={"status": "error", "message": response.text})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"status": "error", "message": str(e)})

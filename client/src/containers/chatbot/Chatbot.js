@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import './Chatbot.css'; // Import the main chatbot CSS
 import ChatWindow from '../../components/chatWindow/ChatWindow';
 import ChatBubble from '../../components/chatBubble/ChatBubble';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 import apiClient from '../../api/api';
 
 function Chatbot() {
@@ -10,6 +11,7 @@ function Chatbot() {
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [chatHistory, setChatHistory] = useState([]); // For API context
+    const navigate = useNavigate();
     const ADK_SERVER_URL = window.REACT_APP_API_GATEWAY_URL;
 
     // Initial welcome message
@@ -38,6 +40,7 @@ function Chatbot() {
             const ADK_APP_NAME = localStorage.getItem("adkAppName");
             const userId = localStorage.getItem("userId");
             const requestBody = { text }; // or customize as needed
+            let detailsIds = [];
             // const response = await axios.post(
             //     `${process.env.REACT_APP_ADK_SERVER_URL}/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
             //     {},
@@ -74,6 +77,22 @@ function Chatbot() {
                     if (typeof text === 'string' && text.startsWith('"') && text.endsWith('"')) {
                         text = text.substring(1, text.length - 1);
                     }
+                    // Find all /details/7digit matches
+                    const detailsMatches = [...text.matchAll(/\/details\/(\d{7})/g)];
+                    detailsIds = detailsMatches.map(m => m[1]);
+                    // Remove all /details/7digit from text
+                    text = text.replace(/\/details\/(\d{7})/g, '');
+                    // Match /cart and /checkout
+                    let cart = null;
+                    let checkout = null;
+                    if (/\/cart/.test(text)) {
+                        cart = '/cart';
+                        text = text.replace(/\/cart/g, '');
+                    }
+                    if (/\/checkout/.test(text)) {
+                        checkout = '/checkout';
+                        text = text.replace(/\/checkout/g, '');
+                    }
                     // Format text: ** to heading, * to bullet, /n to newline
                     text = text
                         .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // **heading**
@@ -85,6 +104,15 @@ function Chatbot() {
                     setMessages((prevMessages) => [...prevMessages, newBotMessage]);
                     setChatHistory((prevHistory) => [...prevHistory, { role: "model", parts: [{ text }] }]);
                     setIsLoading(false);
+                    if (detailsIds.length === 1) {
+                        navigate(`/details/${detailsIds[0]}`);
+                    }
+                    if (cart) {
+                        navigate(cart);
+                    }
+                    if (checkout) {
+                        navigate(checkout);
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);

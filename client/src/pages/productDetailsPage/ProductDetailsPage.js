@@ -9,7 +9,6 @@ import apiClient from '../../api/api';
 function ProductDetailsPage() { 
     const params= useParams()
     const [product, setProduct] = useState({});
-    // const PRODUCT_SERVER_URL = window.REACT_APP_API_GATEWAY_URL
     useEffect(() => {
        apiClient
             .get(`${window.REACT_APP_API_GATEWAY_URL}/products/${params.cdw}`)
