@@ -18,7 +18,7 @@ def create_text_embedding_model():
     )
 
 
-def create_llm_model(deployment_name=os.getenv("AZURE_OPENAI_GPT-4O_DEPLOYMENT_NAME")):
+def create_llm_model(deployment_name=os.getenv("AZURE_OPENAI_GPT_4O_DEPLOYMENT_NAME")):
     """
     Create and return a language model using Azure OpenAI.
     """
