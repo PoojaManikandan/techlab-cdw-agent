@@ -5,7 +5,7 @@ from ..util import MODEL_GPT_41
 from google.adk.agents.llm_agent import Agent
 
 # Now read the value
-BASE_URL = os.environ.get("API_GATEWAY_URL")
+BASE_URL = os.environ.get("SERVER_URL")
 PRODUCT_DETAIL_URL = f"{BASE_URL}/products/{{}}"
 CART_URL = f"{BASE_URL}/cart/{{}}"
 

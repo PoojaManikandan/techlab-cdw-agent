@@ -9,7 +9,7 @@ import os
 from .vectorstore_utils import get_relevant_results
 
 # Now read the value
-BASE_URL = os.environ.get("API_GATEWAY_URL")
+BASE_URL = os.environ.get("SERVER_URL")
 PRODUCT_LIST_URL = f"{BASE_URL}/products"
 PRODUCT_DETAIL_URL = f"{BASE_URL}/products/{{}}"
 

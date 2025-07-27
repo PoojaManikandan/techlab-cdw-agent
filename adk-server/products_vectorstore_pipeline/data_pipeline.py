@@ -55,7 +55,7 @@ def fetch_all_products():
     """
 
     try:
-        response = requests.get(os.getenv("API_GATEWAY_URL") + "/products")
+        response = requests.get(os.getenv("SERVER_URL") + "/products")
         if response.status_code == 200:
             return response.json()
         else:
