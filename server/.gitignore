@@ -50,4 +50,3 @@ pylint-report.txt
 
 # Azure config (contains secrets)
 azure.config
-env.js
