@@ -41,6 +41,7 @@ az containerapp create \
     PRODUCT_SERVER_URL="$PRODUCT_SERVER_URL" \
     ADK_APP_NAME="$ADK_APP_NAME" \
     MONGODB_URL="$MONGODB_URL" \
-    FRONTEND_ORIGIN="$FRONTEND_ORIGIN"
+    FRONTEND_ORIGIN="$FRONTEND_ORIGIN" \
+    SECRET_KEY="$SECRET_KEY" \
 
 echo "✅ Deployment completed successfully!"

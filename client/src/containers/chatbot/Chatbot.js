@@ -41,17 +41,7 @@ function Chatbot() {
             const userId = localStorage.getItem("userId");
             const requestBody = { text }; // or customize as needed
             let detailsIds = [];
-            // const response = await axios.post(
-            //     `${process.env.REACT_APP_ADK_SERVER_URL}/apps/cdw_agent/users/u_125/sessions/${SESSION_ID}`,
-            //     {},
-            //     {
-            //         headers: {
-            //             'Content-Type': 'application/json'
-            //         }
-            //     }
-            // );
 
-            // if(response.status === 200) {
             console.log('ADK_SERVER_URL:', ADK_SERVER_URL);
             if(true){
                 apiClient.post(`${ADK_SERVER_URL}/run`, {

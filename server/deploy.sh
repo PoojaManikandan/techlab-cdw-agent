@@ -35,7 +35,7 @@ az containerapp create \
   --cpu "$CPU" \
   --memory "$MEMORY" \
   --min-replicas 1 \
-  --max-replicas 2 \
+  --max-replicas 1 \
   --env-vars \
     PAYPAL_CLIENT_ID="$PAYPAL_CLIENT_ID" \
     PAYPAL_CLIENT_SECRET="$PAYPAL_CLIENT_SECRET" \
